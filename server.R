@@ -1,0 +1,116 @@
+library(shiny)
+library(dplyr)
+library(sf)
+library(leaflet)
+
+create_map_labels <- function(data, var) {
+  lapply(
+    paste0("<strong>", data[["name"]], "</strong><br>", data[[var]]),
+    HTML
+  )
+}
+
+de_nuts1 <- readRDS(here::here("data/de_nuts1.RDS"))
+de_nuts3 <- readRDS(here::here("data/de_nuts3.RDS"))
+
+fake_data_nuts1 <- readRDS(here::here("data/fake_data_nuts1.RDS"))
+fake_data_nuts3 <- readRDS(here::here("data/fake_data_nuts3.RDS"))
+
+colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
+  lapply(\(d) {
+    d[, paste0("v", 1:4)] |>
+      lapply(\(x) colorNumeric(
+        palette = "BrBG",
+        domain = if (min(x) < 0) {
+          # Diverging palette
+          max(abs(range(x))) * c(-1, 1)
+        } else {
+          # Sequential palette
+          c(min(x) * 2 - max(x), max(x))
+        },
+        na.color = "#cccccc"
+      ))
+  })
+
+function(input, output) {
+  map_drill_obj <- leafdown::Leafdown$new(
+    spdfs_list = list(de_nuts1, de_nuts3) |> lapply(as, "Spatial"),
+    map_output_id = "map_drill",
+    input = input,
+    join_map_levels_by = c("nuts1" = "nuts1")
+  )
+  update_map_drill <- reactiveVal(0)
+
+  observe({
+    map_drill_obj$drill_down()
+    update_map_drill(update_map_drill() + 1)
+  }) |>
+    bindEvent(input$drill_down)
+
+  observe({
+    map_drill_obj$drill_up()
+    update_map_drill(update_map_drill() + 1)
+  }) |>
+    bindEvent(input$drill_up)
+
+  output$map_drill <- renderLeaflet({
+    update_map_drill()
+
+    curr_map_data <- map_drill_obj$curr_data |>
+      select(name, starts_with("nuts"))
+
+    curr_map_level <- map_drill_obj$curr_map_level
+
+    data <-
+      if (curr_map_level == 1) {
+        left_join(
+          curr_map_data,
+          fake_data_nuts1[fake_data_nuts1$year == input$year, ],
+          by = c("name", "nuts1")
+        )
+      } else {
+        left_join(
+          curr_map_data, fake_data_nuts3[fake_data_nuts3$year == input$year, ],
+          by = c("name", "nuts3", "nuts1")
+        )
+      }
+
+    map_drill_obj$add_data(data)
+
+    curr_var <- map_drill_obj$curr_data[[input$map_var]]
+
+    map_drill_obj$draw_leafdown(
+      fillColor = colour_pals[[curr_map_level]][[input$map_var]](curr_var),
+      fillOpacity = 1,
+      color = "#aaaaaa", weight = .5, opacity = 1,
+      label = create_map_labels(data, input$map_var),
+      highlight = highlightOptions(
+        color = "#444444", weight = 1.5
+      )
+    ) |>
+      map_drill_obj$keep_zoom(input) |>
+      addLegend(
+        pal = colour_pals[[curr_map_level]][[input$map_var]],
+        values = curr_var,
+        opacity = 1,
+        title = NULL
+      ) |>
+      leafem::addHomeButton(st_bbox(de_nuts1), "\u21ba", "topleft")
+  })
+
+  observe({
+    lapply(
+      map_drill_obj$.__enclos_env__$private$.curr_sel_ids[[map_drill_obj$curr_map_level]],
+      map_drill_obj$toggle_shape_select
+    )
+  }) |>
+    bindEvent(input$unselect)
+
+  output$selected_data <- renderPrint({
+    if (map_drill_obj$curr_map_level == 1) {
+      fake_data_nuts1[fake_data_nuts1$nuts1 %in% map_drill_obj$curr_sel_data()$nuts1, ]
+    } else {
+      fake_data_nuts3[fake_data_nuts3$nuts3 %in% map_drill_obj$curr_sel_data()$nuts3, ]
+    }
+  })
+}

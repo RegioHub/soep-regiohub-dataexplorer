@@ -1,0 +1,21 @@
+.leaflet-bar button {
+  font-size: initial !important;
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  background-color: #fff !important;
+  color: black !important;
+  opacity: unset !important;
+  border-radius: 2px !important;
+  padding: unset !important;
+}
+
+.leaflet-bar button:hover {
+  background-color: #f4f4f4 !important;
+  text-decoration: none !important;
+  opacity: unset !important;
+}
+
+.leaflet-container {
+  background-color: #fff !important;
+}
