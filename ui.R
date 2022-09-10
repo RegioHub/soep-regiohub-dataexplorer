@@ -1,7 +1,7 @@
-library(gridlayout)
 library(shiny)
+library(gridlayout)
 library(bslib)
-library(leaflet)
+library(shinyjs)
 
 grid_page(
   theme = bs_add_rules(
@@ -9,30 +9,41 @@ grid_page(
     readLines(here::here("www/misc.css"))
   ),
   layout = c(
-    "header header header header header",
-    "controller_left map map map profile",
-    "controller_bottomleft map map map profile"
+    "header header header header header_right header_right",
+    "controller_left map map map charts_common charts_common",
+    "controller_left map map map chart1 chart2",
+    "controller_left map map map chart3 chart4"
   ),
   row_sizes = c(
+    "60px",
     "80px",
     "1fr",
-    "80px"
+    "1fr"
   ),
   col_sizes = c(
     "0.25fr",
     "0.25fr",
     "0.25fr",
     "0.25fr",
-    "1fr"
+    "0.5fr",
+    "0.5fr"
   ),
   gap_size = "15px",
-  shinyjs::useShinyjs(),
+  useShinyjs(),
+  tags$script(src = "echarts-extra.js"),
   grid_card_text(
     area = "header",
-    content = "LWC RegioHub",
+    content = "",
     h_align = "start",
     alignment = "start",
+    icon = "lwc-logo.svg",
     is_title = TRUE
+  ),
+  grid_card_text(
+    area = "header_right",
+    content = "",
+    alignment = "end",
+    icon = "dgs-kongress-logo.svg"
   ),
   grid_card(
     area = "controller_left",
@@ -47,11 +58,15 @@ grid_page(
     ),
     actionButton(
       inputId = "drill_up",
-      label = "↑ NUTS-1"
+      label = "Drill up ↑"
     ),
     actionButton(
       inputId = "drill_down",
-      label = "↓ NUTS-3"
+      label = "Drill down ↓"
+    ),
+    actionButton(
+      inputId = "unselect",
+      label = "Unselect All"
     )
   ),
   grid_card(
@@ -65,23 +80,44 @@ grid_page(
       value = 2016L,
       step = 1L,
       ticks = FALSE,
+      width = "100%",
       sep = ""
     ),
-    leafletOutput("map_drill",
-      height = "calc(100vh - 200px)"
+    leaflet::leafletOutput("map_drill",
+      height = "100%"
     )
   ),
   grid_card(
-    area = "profile",
+    area = "chart1",
     item_gap = "12px",
-    verbatimTextOutput("selected_data")
+    echarts4r::echarts4rOutput("echart1",
+      height = "100%"
+    )
   ),
   grid_card(
-    area = "controller_bottomleft",
+    area = "chart2",
     item_gap = "12px",
-    actionButton(
-      inputId = "unselect",
-      label = "Unselect All"
+    echarts4r::echarts4rOutput("echart2",
+      height = "100%"
     )
+  ),
+  grid_card(
+    area = "chart3",
+    item_gap = "12px",
+    echarts4r::echarts4rOutput("echart3",
+      height = "100%"
+    )
+  ),
+  grid_card(
+    area = "chart4",
+    item_gap = "12px",
+    echarts4r::echarts4rOutput("echart4",
+      height = "100%"
+    )
+  ),
+  grid_card(
+    area = "charts_common",
+    item_gap = "12px",
+    verbatimTextOutput("test")
   )
 )

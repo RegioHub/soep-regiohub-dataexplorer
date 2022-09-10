@@ -1,7 +1,7 @@
 library(shiny)
-library(dplyr)
-library(sf)
+library(shinyjs)
 library(leaflet)
+library(echarts4r)
 
 create_map_labels <- function(data, var) {
   lapply(
@@ -10,11 +10,31 @@ create_map_labels <- function(data, var) {
   )
 }
 
+e_line_p_ <- function(e, serie, bind, name = NULL, legend = TRUE,
+                      y_index = 0, x_index = 0, coord_system = "cartesian2d", ...) {
+  stopifnot(inherits(e, "echarts4rProxy"))
+  stopifnot(is.character(serie) && length(serie) == 1L)
+  if (missing(bind)) {
+    bd <- NULL
+  } else {
+    bd <- deparse(substitute(bind))
+  }
+  e$chart <- e_line_(e$chart, serie, bd, name, legend, y_index, x_index, coord_system, ...)
+  return(e)
+}
+
 de_nuts1 <- readRDS(here::here("data/de_nuts1.RDS"))
 de_nuts3 <- readRDS(here::here("data/de_nuts3.RDS"))
 
 fake_data_nuts1 <- readRDS(here::here("data/fake_data_nuts1.RDS"))
 fake_data_nuts3 <- readRDS(here::here("data/fake_data_nuts3.RDS"))
+
+fake_data_nuts1_wide <- fake_data_nuts1 |>
+  dplyr::mutate(year = as.character(year)) |>
+  dplyr::select(-nuts1) |>
+  tidyr::pivot_longer(v1:v4, names_to = "var", values_to = "value") |>
+  tidyr::pivot_wider(names_from = name, values_from = value) |>
+  split(~var)
 
 colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
   lapply(\(d) {
@@ -32,7 +52,7 @@ colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
       ))
   })
 
-function(input, output) {
+function(input, output, session) {
   map_drill_obj <- leafdown::Leafdown$new(
     spdfs_list = list(de_nuts1, de_nuts3) |> lapply(as, "Spatial"),
     map_output_id = "map_drill",
@@ -57,19 +77,19 @@ function(input, output) {
     update_map_drill()
 
     curr_map_data <- map_drill_obj$curr_data |>
-      select(name, starts_with("nuts"))
+      dplyr::select(name, dplyr::starts_with("nuts"))
 
     curr_map_level <- map_drill_obj$curr_map_level
 
     data <-
       if (curr_map_level == 1) {
-        left_join(
+        dplyr::left_join(
           curr_map_data,
           fake_data_nuts1[fake_data_nuts1$year == input$year, ],
           by = c("name", "nuts1")
         )
       } else {
-        left_join(
+        dplyr::left_join(
           curr_map_data, fake_data_nuts3[fake_data_nuts3$year == input$year, ],
           by = c("name", "nuts3", "nuts1")
         )
@@ -106,11 +126,23 @@ function(input, output) {
   }) |>
     bindEvent(input$unselect)
 
-  output$selected_data <- renderPrint({
-    if (map_drill_obj$curr_map_level == 1) {
-      fake_data_nuts1[fake_data_nuts1$nuts1 %in% map_drill_obj$curr_sel_data()$nuts1, ]
-    } else {
-      fake_data_nuts3[fake_data_nuts3$nuts3 %in% map_drill_obj$curr_sel_data()$nuts3, ]
-    }
+  output$echart1 <- renderEcharts4r({
+    fake_data_nuts1_wide[["v1"]] |>
+      e_charts(year)
   })
+
+  observe({
+    runjs("get_e_charts_series('echart1')")
+
+    charted_regions <- input$echart1_series
+
+    map_selected_regions <- map_drill_obj$curr_sel_data()[["name"]]
+
+    echarts4rProxy("echart1", fake_data_nuts1_wide[["v1"]], year) |>
+      Reduce(e_line_p_, setdiff(map_selected_regions, charted_regions), init = _) |>
+      e_execute() |>
+      Reduce(e_remove_serie_p, setdiff(charted_regions, map_selected_regions), init = _)
+  })
+
+  output$test <- renderPrint(input$echart1_series)
 }
