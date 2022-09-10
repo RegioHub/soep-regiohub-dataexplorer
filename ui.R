@@ -90,30 +90,22 @@ grid_page(
   grid_card(
     area = "chart1",
     item_gap = "12px",
-    echarts4r::echarts4rOutput("echart1",
-      height = "100%"
-    )
+    lineChartUI("echart1")
   ),
   grid_card(
     area = "chart2",
     item_gap = "12px",
-    echarts4r::echarts4rOutput("echart2",
-      height = "100%"
-    )
+    lineChartUI("echart2")
   ),
   grid_card(
     area = "chart3",
     item_gap = "12px",
-    echarts4r::echarts4rOutput("echart3",
-      height = "100%"
-    )
+    lineChartUI("echart3")
   ),
   grid_card(
     area = "chart4",
     item_gap = "12px",
-    echarts4r::echarts4rOutput("echart4",
-      height = "100%"
-    )
+    lineChartUI("echart4")
   ),
   grid_card(
     area = "charts_common",

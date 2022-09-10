@@ -2,6 +2,8 @@ library(shiny)
 library(shinyjs)
 library(leaflet)
 library(echarts4r)
+library(dplyr)
+library(tidyr)
 
 create_map_labels <- function(data, var) {
   lapply(
@@ -10,30 +12,27 @@ create_map_labels <- function(data, var) {
   )
 }
 
-e_line_p_ <- function(e, serie, bind, name = NULL, legend = TRUE,
-                      y_index = 0, x_index = 0, coord_system = "cartesian2d", ...) {
-  stopifnot(inherits(e, "echarts4rProxy"))
-  stopifnot(is.character(serie) && length(serie) == 1L)
-  if (missing(bind)) {
-    bd <- NULL
-  } else {
-    bd <- deparse(substitute(bind))
-  }
-  e$chart <- e_line_(e$chart, serie, bd, name, legend, y_index, x_index, coord_system, ...)
-  return(e)
-}
-
 de_nuts1 <- readRDS(here::here("data/de_nuts1.RDS"))
 de_nuts3 <- readRDS(here::here("data/de_nuts3.RDS"))
+
+# sf::st_bbox(de_nuts1)
+de_bbox <- c(xmin = 5.87709, ymin = 47.27011, xmax = 15.03355, ymax = 55.05428)
 
 fake_data_nuts1 <- readRDS(here::here("data/fake_data_nuts1.RDS"))
 fake_data_nuts3 <- readRDS(here::here("data/fake_data_nuts3.RDS"))
 
 fake_data_nuts1_wide <- fake_data_nuts1 |>
-  dplyr::mutate(year = as.character(year)) |>
-  dplyr::select(-nuts1) |>
-  tidyr::pivot_longer(v1:v4, names_to = "var", values_to = "value") |>
-  tidyr::pivot_wider(names_from = name, values_from = value) |>
+  mutate(year = as.character(year)) |>
+  select(-nuts1) |>
+  pivot_longer(v1:v4, names_to = "var", values_to = "value") |>
+  pivot_wider(names_from = name, values_from = value) |>
+  split(~var)
+
+fake_data_nuts3_wide <- fake_data_nuts3 |>
+  mutate(year = as.character(year)) |>
+  select(-c(nuts3, nuts1)) |>
+  pivot_longer(v1:v4, names_to = "var", values_to = "value") |>
+  pivot_wider(names_from = name, values_from = value) |>
   split(~var)
 
 colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
@@ -61,6 +60,17 @@ function(input, output, session) {
   )
   update_map_drill <- reactiveVal(0)
 
+  curr_map_level <- reactive(map_drill_obj$curr_map_level) |>
+    bindEvent(input$drill_down, input$drill_up)
+
+  chart_data <- reactive({
+    if (curr_map_level() == 1) {
+      fake_data_nuts1_wide
+    } else {
+      fake_data_nuts3_wide
+    }
+  })
+
   observe({
     map_drill_obj$drill_down()
     update_map_drill(update_map_drill() + 1)
@@ -77,19 +87,17 @@ function(input, output, session) {
     update_map_drill()
 
     curr_map_data <- map_drill_obj$curr_data |>
-      dplyr::select(name, dplyr::starts_with("nuts"))
-
-    curr_map_level <- map_drill_obj$curr_map_level
+      select(name, starts_with("nuts"))
 
     data <-
-      if (curr_map_level == 1) {
-        dplyr::left_join(
+      if (curr_map_level() == 1) {
+        left_join(
           curr_map_data,
           fake_data_nuts1[fake_data_nuts1$year == input$year, ],
           by = c("name", "nuts1")
         )
       } else {
-        dplyr::left_join(
+        left_join(
           curr_map_data, fake_data_nuts3[fake_data_nuts3$year == input$year, ],
           by = c("name", "nuts3", "nuts1")
         )
@@ -100,7 +108,7 @@ function(input, output, session) {
     curr_var <- map_drill_obj$curr_data[[input$map_var]]
 
     map_drill_obj$draw_leafdown(
-      fillColor = colour_pals[[curr_map_level]][[input$map_var]](curr_var),
+      fillColor = colour_pals[[curr_map_level()]][[input$map_var]](curr_var),
       fillOpacity = 1,
       color = "#aaaaaa", weight = .5, opacity = 1,
       label = create_map_labels(data, input$map_var),
@@ -110,39 +118,30 @@ function(input, output, session) {
     ) |>
       map_drill_obj$keep_zoom(input) |>
       addLegend(
-        pal = colour_pals[[curr_map_level]][[input$map_var]],
+        pal = colour_pals[[curr_map_level()]][[input$map_var]],
         values = curr_var,
         opacity = 1,
         title = NULL
       ) |>
-      leafem::addHomeButton(st_bbox(de_nuts1), "\u21ba", "topleft")
+      leafem::addHomeButton(de_bbox, "\u21ba", "topleft")
   })
 
   observe({
     lapply(
-      map_drill_obj$.__enclos_env__$private$.curr_sel_ids[[map_drill_obj$curr_map_level]],
+      map_drill_obj$.__enclos_env__$private$.curr_sel_ids[[curr_map_level()]],
       map_drill_obj$toggle_shape_select
     )
   }) |>
     bindEvent(input$unselect)
 
-  output$echart1 <- renderEcharts4r({
-    fake_data_nuts1_wide[["v1"]] |>
-      e_charts(year)
-  })
-
-  observe({
-    runjs("get_e_charts_series('echart1')")
-
-    charted_regions <- input$echart1_series
-
-    map_selected_regions <- map_drill_obj$curr_sel_data()[["name"]]
-
-    echarts4rProxy("echart1", fake_data_nuts1_wide[["v1"]], year) |>
-      Reduce(e_line_p_, setdiff(map_selected_regions, charted_regions), init = _) |>
-      e_execute() |>
-      Reduce(e_remove_serie_p, setdiff(charted_regions, map_selected_regions), init = _)
-  })
-
-  output$test <- renderPrint(input$echart1_series)
+  lapply(
+    1:4,
+    \(x) lineChartServer(
+      id = paste0("echart", x),
+      varname = paste0("v", x),
+      dataset = chart_data,
+      leaflet_map = map_drill_obj,
+      charted_lines = reactive(input[[paste0("echart", x, "-chart_series")]])
+    )
+  )
 }
