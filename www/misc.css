@@ -1,3 +1,7 @@
+.card {
+  border: 0;
+}
+
 .leaflet-bar button {
   font-size: initial !important;
   width: 30px !important;

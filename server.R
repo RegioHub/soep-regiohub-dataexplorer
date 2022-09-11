@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyjs)
 library(leaflet)
 library(echarts4r)
 library(sf)
@@ -137,8 +138,7 @@ function(input, output, session) {
   lapply(
     1:4,
     \(x) lineChartServer(
-      id = paste0("echart", x),
-      varname = paste0("v", x),
+      id = paste0("v", x), # id must be name of variable to be plotted
       data = chart_data,
       leaflet_map = map_drill_obj
     )

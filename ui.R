@@ -1,6 +1,7 @@
 library(shiny)
 library(gridlayout)
 library(bslib)
+library(shinyjs)
 
 grid_page(
   theme = bs_add_rules(
@@ -28,7 +29,7 @@ grid_page(
     "0.5fr"
   ),
   gap_size = "15px",
-  shinyjs::useShinyjs(),
+  useShinyjs(),
   grid_card_text(
     area = "header",
     content = "",
@@ -54,14 +55,16 @@ grid_page(
         1:4
       )
     ),
+    hr(),
     actionButton(
       inputId = "drill_up",
-      label = "Drill up ↑"
+      label = "↑ NUTS-1"
     ),
     actionButton(
       inputId = "drill_down",
-      label = "Drill down ↓"
+      label = "↓ NUTS-3"
     ),
+    hr(),
     actionButton(
       inputId = "unselect",
       label = "Unselect All"
@@ -88,26 +91,25 @@ grid_page(
   grid_card(
     area = "chart1",
     item_gap = "12px",
-    lineChartUI("echart1")
+    lineChartUI("v1")
   ),
   grid_card(
     area = "chart2",
     item_gap = "12px",
-    lineChartUI("echart2")
+    lineChartUI("v2")
   ),
   grid_card(
     area = "chart3",
     item_gap = "12px",
-    lineChartUI("echart3")
+    lineChartUI("v3")
   ),
   grid_card(
     area = "chart4",
     item_gap = "12px",
-    lineChartUI("echart4")
+    lineChartUI("v4")
   ),
   grid_card(
     area = "charts_common",
-    item_gap = "12px",
-    verbatimTextOutput("test")
+    item_gap = "12px"
   )
 )

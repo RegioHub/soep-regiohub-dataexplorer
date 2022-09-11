@@ -1,19 +1,20 @@
 library(shiny)
 library(echarts4r)
 
-lineChartUI <- function(id) {
+lineChartUI <- function(id, title = id) {
   ns <- NS(id)
   tagList(
+    h4(title),
     echarts4rOutput(ns("chart"), height = "100%")
   )
 }
 
-lineChartServer <- function(id, varname, data, leaflet_map) {
+lineChartServer <- function(id, data, leaflet_map) {
   moduleServer(
     id,
     function(input, output, session) {
       output$chart <- renderEcharts4r({
-        data()[[varname]] |>
+        data()[[id]] |>
           e_charts(year)
       })
 
@@ -27,7 +28,7 @@ lineChartServer <- function(id, varname, data, leaflet_map) {
         bindEvent(leaflet_map$curr_sel_data())
 
       current_regions <- reactive({
-        intersect(map_selected_regions$current, names(data()[[varname]]))
+        intersect(map_selected_regions$current, names(data()[[id]]))
       })
 
       last_regions <- reactive(map_selected_regions$last)
@@ -37,7 +38,7 @@ lineChartServer <- function(id, varname, data, leaflet_map) {
 
         removed_regions <- setdiff(last_regions(), current_regions())
 
-        proxy <- echarts4rProxy(paste0(id, "-chart"), data()[[varname]], year)
+        proxy <- echarts4rProxy(paste0(id, "-chart"), data()[[id]], year)
 
         if (length(added_regions)) {
           proxy |>
