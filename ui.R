@@ -1,7 +1,6 @@
 library(shiny)
 library(gridlayout)
 library(bslib)
-library(shinyjs)
 
 grid_page(
   theme = bs_add_rules(
@@ -29,8 +28,7 @@ grid_page(
     "0.5fr"
   ),
   gap_size = "15px",
-  useShinyjs(),
-  tags$script(src = "echarts-extra.js"),
+  shinyjs::useShinyjs(),
   grid_card_text(
     area = "header",
     content = "",

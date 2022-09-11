@@ -1,5 +1,4 @@
 library(shiny)
-library(shinyjs)
 library(echarts4r)
 
 lineChartUI <- function(id) {
@@ -9,29 +8,36 @@ lineChartUI <- function(id) {
   )
 }
 
-lineChartServer <- function(id, varname, dataset, leaflet_map, charted_lines) {
+lineChartServer <- function(id, varname, data, leaflet_map) {
   moduleServer(
     id,
     function(input, output, session) {
       output$chart <- renderEcharts4r({
-        dataset()[[varname]] |>
+        data()[[varname]] |>
           e_charts(year)
       })
 
-      chart_id <- paste0(id, "-chart")
+      # https://stackoverflow.com/a/41199134
+      map_selected_regions <- reactiveValues(current = character(), last = character())
 
       observe({
-        runjs(paste0("get_e_charts_series('", chart_id, "')"))
+        map_selected_regions$last <- map_selected_regions$current
+        map_selected_regions$current <- leaflet_map$curr_sel_data()[["name"]]
+      }) |>
+        bindEvent(leaflet_map$curr_sel_data())
 
-        charted_regions <- charted_lines()
+      current_regions <- reactive({
+        intersect(map_selected_regions$current, names(data()[[varname]]))
+      })
 
-        map_selected_regions <- leaflet_map$curr_sel_data()[["name"]]
+      last_regions <- reactive(map_selected_regions$last)
 
-        added_regions <- setdiff(map_selected_regions, charted_regions)
+      observe({
+        added_regions <- setdiff(current_regions(), last_regions())
 
-        removed_regions <- setdiff(charted_regions, map_selected_regions)
+        removed_regions <- setdiff(last_regions(), current_regions())
 
-        proxy <- echarts4rProxy(chart_id, dataset()[[varname]], year)
+        proxy <- echarts4rProxy(paste0(id, "-chart"), data()[[varname]], year)
 
         if (length(added_regions)) {
           proxy |>
@@ -43,8 +49,7 @@ lineChartServer <- function(id, varname, dataset, leaflet_map, charted_lines) {
           proxy |>
             Reduce(e_remove_serie_p, removed_regions, init = _)
         }
-      }) |>
-        bindEvent(leaflet_map$curr_sel_data())
+      })
     }
   )
 }

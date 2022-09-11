@@ -1,7 +1,7 @@
 library(shiny)
-library(shinyjs)
 library(leaflet)
 library(echarts4r)
+library(sf)
 library(dplyr)
 library(tidyr)
 
@@ -132,16 +132,15 @@ function(input, output, session) {
       map_drill_obj$toggle_shape_select
     )
   }) |>
-    bindEvent(input$unselect)
+    bindEvent(input$unselect, curr_map_level())
 
   lapply(
     1:4,
     \(x) lineChartServer(
       id = paste0("echart", x),
       varname = paste0("v", x),
-      dataset = chart_data,
-      leaflet_map = map_drill_obj,
-      charted_lines = reactive(input[[paste0("echart", x, "-chart_series")]])
+      data = chart_data,
+      leaflet_map = map_drill_obj
     )
   )
 }
