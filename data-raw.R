@@ -25,7 +25,9 @@ fake_data_nuts1 <- fake_data_nuts3 |>
   left_join(st_drop_geometry(de_nuts1), by = "nuts1") |>
   relocate(name)
 
+de_maps <- map(list(de_nuts1, de_nuts3), as, "Spatial")
+
 iwalk(
-  mget(c("de_nuts1", "de_nuts3", "fake_data_nuts1", "fake_data_nuts3")),
+  mget(c("de_maps", "fake_data_nuts1", "fake_data_nuts3")),
   \(x, i) saveRDS(x, paste0("data/", i, ".RDS"), compress = FALSE)
 )

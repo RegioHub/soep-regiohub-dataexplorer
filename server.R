@@ -2,7 +2,6 @@ library(shiny)
 library(shinyjs)
 library(leaflet)
 library(echarts4r)
-library(sf)
 library(dplyr)
 library(tidyr)
 
@@ -13,14 +12,13 @@ create_map_labels <- function(data, var) {
   )
 }
 
-de_nuts1 <- readRDS(here::here("data/de_nuts1.RDS"))
-de_nuts3 <- readRDS(here::here("data/de_nuts3.RDS"))
+de_maps <- readRDS("data/de_maps.RDS")
 
 # sf::st_bbox(de_nuts1)
 de_bbox <- c(xmin = 5.87709, ymin = 47.27011, xmax = 15.03355, ymax = 55.05428)
 
-fake_data_nuts1 <- readRDS(here::here("data/fake_data_nuts1.RDS"))
-fake_data_nuts3 <- readRDS(here::here("data/fake_data_nuts3.RDS"))
+fake_data_nuts1 <- readRDS("data/fake_data_nuts1.RDS")
+fake_data_nuts3 <- readRDS("data/fake_data_nuts3.RDS")
 
 fake_data_nuts1_wide <- fake_data_nuts1 |>
   mutate(year = as.character(year)) |>
@@ -56,7 +54,7 @@ function(input, output, session) {
   disable("drill_up")
 
   map_drill_obj <- Leafdown2$new(
-    spdfs_list = list(de_nuts1, de_nuts3) |> lapply(as, "Spatial"),
+    spdfs_list = de_maps,
     map_output_id = "map_drill",
     drill_down_button_id = "drill_down",
     drill_up_button_id = "drill_up",
