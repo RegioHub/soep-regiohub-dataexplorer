@@ -16,6 +16,10 @@ lineChartServer <- function(id, data, leaflet_map) {
       output$chart <- renderEcharts4r({
         data()[[id]] |>
           e_charts(year) |>
+          e_theme_custom(
+            # Dark 3 colour palette
+            '{"color":["#DB9D85","#9DB469","#3DBEAB","#87AEDF","#DA95CC"]}'
+          ) |>
           e_tooltip(
             order = "valueDesc",
             trigger = "axis",

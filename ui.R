@@ -30,6 +30,7 @@ grid_page(
   ),
   gap_size = "15px",
   useShinyjs(),
+  tags$script(src = "misc.js"),
   grid_card_text(
     area = "header",
     content = "",
@@ -110,6 +111,7 @@ grid_page(
   ),
   grid_card(
     area = "charts_common",
-    item_gap = "12px"
+    item_gap = "12px",
+    uiOutput("echarts_legend")
   )
 )

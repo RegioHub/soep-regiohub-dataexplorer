@@ -5,12 +5,16 @@ library(echarts4r)
 library(dplyr)
 library(tidyr)
 
+# Utils -------------------------------------------------------------------
+
 create_map_labels <- function(data, var) {
   lapply(
     paste0("<div>", data[["name"]], "</div><div><strong>", data[[var]], "</strong></div>"),
     HTML
   )
 }
+
+# Data --------------------------------------------------------------------
 
 de_maps <- readRDS("data/de_maps.RDS")
 
@@ -34,7 +38,7 @@ fake_data_nuts3_wide <- fake_data_nuts3 |>
   pivot_wider(names_from = name, values_from = value) |>
   split(~var)
 
-colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
+map_colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
   lapply(\(d) {
     d[, paste0("v", 1:4)] |>
       lapply(\(x) colorNumeric(
@@ -50,7 +54,16 @@ colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
       ))
   })
 
+# colorspace::qualitative_hcl(5, palette = "Dynamic")
+chart_legend_colours <- c("#DB9D85", "#9DB469", "#3DBEAB", "#87AEDF", "#DA95CC") |>
+  sprintf(fmt = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:%s;"></span>')
+
+# Server ------------------------------------------------------------------
+
 function(input, output, session) {
+
+  ## Startup ----
+
   disable("drill_up")
 
   map_drill_obj <- Leafdown2$new(
@@ -63,6 +76,8 @@ function(input, output, session) {
   )
   update_map_drill <- reactiveVal(0)
 
+  ## Monitor state of data selection ----
+
   curr_map_level <- reactive(map_drill_obj$curr_map_level) |>
     bindEvent(input$drill_down, input$drill_up)
 
@@ -73,6 +88,8 @@ function(input, output, session) {
       fake_data_nuts3_wide
     }
   })
+
+  ## Map ----
 
   observe({
     map_drill_obj$drill_down()
@@ -111,7 +128,7 @@ function(input, output, session) {
     curr_var <- map_drill_obj$curr_data[[input$map_var]]
 
     map_drill_obj$draw_leafdown(
-      fillColor = colour_pals[[curr_map_level()]][[input$map_var]](curr_var),
+      fillColor = map_colour_pals[[curr_map_level()]][[input$map_var]](curr_var),
       fillOpacity = 1,
       color = "#aaaaaa", weight = .5, opacity = 1,
       label = create_map_labels(data, input$map_var),
@@ -121,7 +138,7 @@ function(input, output, session) {
     ) |>
       map_drill_obj$keep_zoom(input) |>
       addLegend(
-        pal = colour_pals[[curr_map_level()]][[input$map_var]],
+        pal = map_colour_pals[[curr_map_level()]][[input$map_var]],
         values = curr_var,
         opacity = 1,
         title = NULL
@@ -137,6 +154,9 @@ function(input, output, session) {
   }) |>
     bindEvent(input$unselect, input$drill_up)
 
+  ## Line charts ----
+
+  ### Draw charts ----
   lapply(
     1:4,
     \(x) lineChartServer(
@@ -145,4 +165,18 @@ function(input, output, session) {
       leaflet_map = map_drill_obj
     )
   )
+
+  ### Update legend ----
+
+  # Update input$echarts_series
+  observe({
+    runjs('get_echarts_series("v1-chart")') # ID of 1st echart
+  }) |>
+    bindEvent(map_drill_obj$curr_sel_data())
+
+  output$echarts_legend <- renderUI({
+    paste0(chart_legend_colours, input$echarts_series)[seq_along(input$echarts_series)] |>
+      paste0(collapse = "&emsp;") |>
+      HTML()
+  })
 }
