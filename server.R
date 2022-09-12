@@ -7,7 +7,7 @@ library(tidyr)
 
 create_map_labels <- function(data, var) {
   lapply(
-    paste0("<strong>", data[["name"]], "</strong><br>", data[[var]]),
+    paste0("<div>", data[["name"]], "</div><div><strong>", data[[var]], "</strong></div>"),
     HTML
   )
 }

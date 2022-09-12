@@ -15,7 +15,12 @@ lineChartServer <- function(id, data, leaflet_map) {
     function(input, output, session) {
       output$chart <- renderEcharts4r({
         data()[[id]] |>
-          e_charts(year)
+          e_charts(year) |>
+          e_tooltip(
+            order = "valueDesc",
+            trigger = "axis",
+            appendToBody = TRUE # Shown even when overflowing grid boundaries
+          )
       })
 
       # https://stackoverflow.com/a/41199134
