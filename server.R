@@ -53,9 +53,13 @@ colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
   })
 
 function(input, output, session) {
-  map_drill_obj <- leafdown::Leafdown$new(
+  disable("drill_up")
+
+  map_drill_obj <- Leafdown2$new(
     spdfs_list = list(de_nuts1, de_nuts3) |> lapply(as, "Spatial"),
     map_output_id = "map_drill",
+    drill_down_button_id = "drill_down",
+    drill_up_button_id = "drill_up",
     input = input,
     join_map_levels_by = c("nuts1" = "nuts1")
   )
@@ -129,11 +133,11 @@ function(input, output, session) {
 
   observe({
     lapply(
-      map_drill_obj$.__enclos_env__$private$.curr_sel_ids[[curr_map_level()]],
+      map_drill_obj$curr_sel_ids[[curr_map_level()]],
       map_drill_obj$toggle_shape_select
     )
   }) |>
-    bindEvent(input$unselect, curr_map_level())
+    bindEvent(input$unselect, input$drill_up)
 
   lapply(
     1:4,
