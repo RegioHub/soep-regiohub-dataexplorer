@@ -111,12 +111,14 @@ function(input, output, session) {
 
     data <-
       if (curr_map_level() == 1) {
+        req(!"nuts3" %in% names(curr_map_data))
         left_join(
           curr_map_data,
           fake_data_nuts1[fake_data_nuts1$year == input$year, ],
           by = c("name", "nuts1")
         )
       } else {
+        req("nuts3" %in% names(curr_map_data))
         left_join(
           curr_map_data, fake_data_nuts3[fake_data_nuts3$year == input$year, ],
           by = c("name", "nuts3", "nuts1")
