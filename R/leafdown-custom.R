@@ -1,7 +1,7 @@
 Leafdown2 <- R6::R6Class("Leafdown2",
   inherit = leafdown::Leafdown,
-  private = list(
-    .drill_down_button_id = NULL, #<<
+  private = list( #<<
+    .drill_down_button_id = NULL,
     .drill_up_button_id = NULL,
     .parent_spdf = NULL
   ),
@@ -125,7 +125,8 @@ Leafdown2 <- R6::R6Class("Leafdown2",
       # }
 
       private$.map_proxy |>
-        leaflet::hideGroup(all_poly_ids) #<<
+        leaflet::hideGroup(all_poly_ids) |>
+        leaflet::showGroup(private$.curr_sel_ids[[private$.curr_map_level]])
 
       map
     },
@@ -160,12 +161,11 @@ Leafdown2 <- R6::R6Class("Leafdown2",
       private$.curr_sel_ids[[private$.curr_map_level]] <- character(0)
       private$.curr_data <- private$.curr_spdf@data
 
-      if (TRUE) {
-        # if (private$.curr_map_level == length(private$.spdfs_list)) {
-        shinyjs::disable(private$.drill_down_button_id) #<<
-        shinyjs::enable(private$.drill_up_button_id)
-        shiny::req(FALSE)
+      if (private$.curr_map_level == length(private$.spdfs_list)) { #<<
+        shinyjs::disable(private$.drill_down_button_id)
       }
+
+      shinyjs::enable(private$.drill_up_button_id)
     },
 
     # Disable drill_up button when highest level is reached
@@ -190,12 +190,20 @@ Leafdown2 <- R6::R6Class("Leafdown2",
       # private$.unselected_parents <- private$.unselected_parents[seq_len(private$.curr_map_level - 1)]
       private$.curr_data <- private$.curr_spdf@data
 
-      if (TRUE) {
-        # if (private$.curr_map_level <= 1) {
-        shinyjs::enable(private$.drill_down_button_id) #<<
-        shinyjs::disable(private$.drill_up_button_id) #<<
-        shiny::req(FALSE)
+      if (private$.curr_map_level <= 1) { #<<
+        shinyjs::disable(private$.drill_up_button_id)
       }
+
+      shinyjs::enable(private$.drill_down_button_id)
+    },
+
+    # New public method to unselect all regions
+    unselect_all = function() { #<<
+      private$.map_proxy |>
+        leaflet::hideGroup(private$.curr_poly_ids)
+
+      private$.curr_sel_ids[[private$.curr_map_level]] <- character()
+      private$.curr_sel_data(data.frame())
     }
   )
 )

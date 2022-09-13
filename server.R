@@ -94,6 +94,11 @@ function(input, output, session) {
   }) |>
     bindEvent(input$drill_up)
 
+  observe({
+    map_drill_obj$unselect_all()
+  }) |>
+    bindEvent(input$unselect)
+
   output$map_drill <- renderLeaflet({
     update_map_drill()
 
@@ -122,14 +127,6 @@ function(input, output, session) {
     map_drill_obj$draw_leafdown(map_colour_pals, input$map_var, de_bbox) |>
       map_drill_obj$keep_zoom(input)
   })
-
-  observe({
-    lapply(
-      map_drill_obj$curr_sel_ids[[curr_map_level()]],
-      map_drill_obj$toggle_shape_select
-    )
-  }) |>
-    bindEvent(input$unselect)
 
   ## Line charts ----
 
