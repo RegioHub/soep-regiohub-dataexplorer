@@ -3,7 +3,40 @@ Leafdown2 <- R6::R6Class("Leafdown2",
   private = list( #<<
     .drill_down_button_id = NULL,
     .drill_up_button_id = NULL,
-    .parent_spdf = NULL
+    .parent_spdf = NULL,
+
+    # Prevent selecting more than 5 regions
+    .toggle_shape_select = function(shape_id) {
+      checkmate::assert_character(shape_id, min.chars = 1)
+
+      curr_sel_ids <- private$.curr_sel_ids[[private$.curr_map_level]]
+
+      if (length(curr_sel_ids) >= 5) { #<<
+        shinyjs::alert("Cannot select more than five regions")
+        shiny::req(FALSE)
+      }
+
+      if (!shape_id %in% private$.curr_poly_ids) {
+        stop("Please make sure the selected shape_id is in the current level")
+      }
+
+      if (shape_id %in% curr_sel_ids) {
+        private$.map_proxy |>
+          hideGroup(shape_id)
+
+        curr_sel_ids <- curr_sel_ids[!curr_sel_ids == shape_id]
+      } else {
+        private$.map_proxy |>
+          showGroup(shape_id)
+
+        curr_sel_ids <- c(curr_sel_ids, shape_id)
+      }
+
+      curr_sel_data <- private$.curr_data[private$.curr_poly_ids %in% curr_sel_ids, ]
+
+      private$.curr_sel_ids[[private$.curr_map_level]] <- curr_sel_ids
+      private$.curr_sel_data(curr_sel_data)
+    }
   ),
   active = list(
     # Add active binding for curr_sel_ids (for unselect all)
