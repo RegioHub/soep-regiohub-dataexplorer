@@ -111,7 +111,8 @@ function(input, output, session) {
       } else {
         req("nuts3" %in% names(curr_map_data))
         left_join(
-          curr_map_data, fake_data_nuts3[fake_data_nuts3$year == input$year, ],
+          curr_map_data,
+          fake_data_nuts3[fake_data_nuts3$year == input$year, ],
           by = c("name", "nuts3", "nuts1")
         )
       }
@@ -128,7 +129,7 @@ function(input, output, session) {
       map_drill_obj$toggle_shape_select
     )
   }) |>
-    bindEvent(input$unselect, input$drill_up)
+    bindEvent(input$unselect)
 
   ## Line charts ----
 
@@ -152,6 +153,7 @@ function(input, output, session) {
 
   output$echarts_legend <- renderUI({
     paste0(chart_legend_colours, input$echarts_series)[seq_along(input$echarts_series)] |>
+      sprintf(fmt = '<span style="white-space:nowrap;">%s</span>') |>
       paste0(collapse = "&emsp;") |>
       HTML()
   })

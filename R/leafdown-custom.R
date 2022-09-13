@@ -72,7 +72,7 @@ Leafdown2 <- R6::R6Class("Leafdown2",
           fillColor = map_colour_pals[[private$.curr_map_level]][[var]](private$.curr_data[[var]]),
           fillOpacity = 1,
           weight = if (private$.curr_map_level == 1) 2 else 1,
-          color = if (private$.curr_map_level == 1) "#ffffff" else "#dee2e6",
+          color = if (private$.curr_map_level == 1) "#fff" else "#dee2e6",
           opacity = 1,
           label = create_map_labels(private$.curr_data, var),
           highlight = leaflet::highlightOptions(fillColor = "#dee2e6")
@@ -81,7 +81,7 @@ Leafdown2 <- R6::R6Class("Leafdown2",
           group = all_poly_ids,
           stroke = TRUE,
           weight = 3,
-          color = "#000000", #<<
+          color = "#666", #<<
           opacity = 1,
           highlightOptions = leaflet::highlightOptions(bringToFront = TRUE, weight = 4)
         ) |>
@@ -98,7 +98,7 @@ Leafdown2 <- R6::R6Class("Leafdown2",
           leaflet::addPolylines(
             data = private$.parent_spdf,
             weight = 2,
-            color = "#ffffff",
+            color = "#fff",
             opacity = 1
           )
       }
