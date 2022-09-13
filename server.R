@@ -5,15 +5,6 @@ library(echarts4r)
 library(dplyr)
 library(tidyr)
 
-# Utils -------------------------------------------------------------------
-
-create_map_labels <- function(data, var) {
-  lapply(
-    paste0("<div>", data[["name"]], "</div><div><strong>", data[[var]], "</strong></div>"),
-    HTML
-  )
-}
-
 # Data --------------------------------------------------------------------
 
 de_maps <- readRDS("data/de_maps.RDS")
@@ -127,25 +118,8 @@ function(input, output, session) {
 
     map_drill_obj$add_data(data)
 
-    curr_var <- map_drill_obj$curr_data[[input$map_var]]
-
-    map_drill_obj$draw_leafdown(
-      fillColor = map_colour_pals[[curr_map_level()]][[input$map_var]](curr_var),
-      fillOpacity = 1,
-      color = "#aaaaaa", weight = .5, opacity = 1,
-      label = create_map_labels(data, input$map_var),
-      highlight = highlightOptions(
-        color = "#444444", weight = 1.5
-      )
-    ) |>
-      map_drill_obj$keep_zoom(input) |>
-      addLegend(
-        pal = map_colour_pals[[curr_map_level()]][[input$map_var]],
-        values = curr_var,
-        opacity = 1,
-        title = NULL
-      ) |>
-      leafem::addHomeButton(de_bbox, "\u21ba", "topleft")
+    map_drill_obj$draw_leafdown(map_colour_pals, input$map_var, de_bbox) |>
+      map_drill_obj$keep_zoom(input)
   })
 
   observe({
