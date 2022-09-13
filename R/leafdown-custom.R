@@ -75,7 +75,7 @@ Leafdown2 <- R6::R6Class("Leafdown2",
           color = if (private$.curr_map_level == 1) "#ffffff" else "#dee2e6",
           opacity = 1,
           label = create_map_labels(private$.curr_data, var),
-          highlight = highlightOptions(fillColor = "#dee2e6")
+          highlight = leaflet::highlightOptions(fillColor = "#dee2e6")
         ) |>
         leaflet::addPolylines(
           group = all_poly_ids,
@@ -186,6 +186,7 @@ Leafdown2 <- R6::R6Class("Leafdown2",
 
       private$.curr_poly_ids <- sapply(private$.curr_spdf@polygons, slot, "ID")
       private$.curr_map_level <- private$.curr_map_level - 1
+      private$.curr_sel_ids[[private$.curr_map_level]] <- character(0) #<<
       # private$.unselected_parents <- private$.unselected_parents[seq_len(private$.curr_map_level - 1)]
       private$.curr_data <- private$.curr_spdf@data
 

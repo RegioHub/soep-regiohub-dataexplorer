@@ -1,26 +1,23 @@
-library(shiny)
-library(echarts4r)
-
 lineChartUI <- function(id, title = id) {
-  ns <- NS(id)
-  tagList(
-    h4(title),
-    echarts4rOutput(ns("chart"), height = "100%")
+  ns <- shiny::NS(id)
+  shiny::tagList(
+    shiny::h4(title),
+    echarts4r::echarts4rOutput(ns("chart"), height = "100%")
   )
 }
 
 lineChartServer <- function(id, data, leaflet_map) {
-  moduleServer(
+  shiny::moduleServer(
     id,
     function(input, output, session) {
-      output$chart <- renderEcharts4r({
+      output$chart <- echarts4r::renderEcharts4r({
         data()[[id]] |>
-          e_charts(year) |>
-          e_theme_custom(
+          echarts4r::e_charts(year) |>
+          echarts4r::e_theme_custom(
             # Dark 3 colour palette
             '{"color":["#DB9D85","#9DB469","#3DBEAB","#87AEDF","#DA95CC"]}'
           ) |>
-          e_tooltip(
+          echarts4r::e_tooltip(
             order = "valueDesc",
             trigger = "axis",
             appendToBody = TRUE # Shown even when overflowing grid boundaries
@@ -28,36 +25,36 @@ lineChartServer <- function(id, data, leaflet_map) {
       })
 
       # https://stackoverflow.com/a/41199134
-      map_selected_regions <- reactiveValues(current = character(), last = character())
+      map_selected_regions <- shiny::reactiveValues(current = character(), last = character())
 
-      observe({
+      shiny::observe({
         map_selected_regions$last <- map_selected_regions$current
         map_selected_regions$current <- leaflet_map$curr_sel_data()[["name"]]
       }) |>
-        bindEvent(leaflet_map$curr_sel_data())
+        shiny::bindEvent(leaflet_map$curr_sel_data())
 
-      current_regions <- reactive({
+      current_regions <- shiny::reactive({
         intersect(map_selected_regions$current, names(data()[[id]]))
       })
 
-      last_regions <- reactive(map_selected_regions$last)
+      last_regions <- shiny::reactive(map_selected_regions$last)
 
-      observe({
+      shiny::observe({
         added_regions <- setdiff(current_regions(), last_regions())
 
         removed_regions <- setdiff(last_regions(), current_regions())
 
-        proxy <- echarts4rProxy(paste0(id, "-chart"), data()[[id]], year)
+        proxy <- echarts4r::echarts4rProxy(paste0(id, "-chart"), data()[[id]], year)
 
         if (length(added_regions)) {
           proxy |>
             Reduce(e_line_p_, added_regions, init = _) |>
-            e_execute()
+            echarts4r::e_execute()
         }
 
         if (length(removed_regions)) {
           proxy |>
-            Reduce(e_remove_serie_p, removed_regions, init = _)
+            Reduce(echarts4r::e_remove_serie_p, removed_regions, init = _)
         }
       })
     }
@@ -73,6 +70,6 @@ e_line_p_ <- function(e, serie, bind, name = NULL, legend = TRUE,
   } else {
     bd <- deparse(substitute(bind))
   }
-  e$chart <- e_line_(e$chart, serie, bd, name, legend, y_index, x_index, coord_system, ...)
+  e$chart <- echarts4r::e_line_(e$chart, serie, bd, name, legend, y_index, x_index, coord_system, ...)
   e
 }
