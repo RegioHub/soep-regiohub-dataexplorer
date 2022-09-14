@@ -112,6 +112,6 @@ grid_page(
   grid_card(
     area = "charts_common",
     item_gap = "12px",
-    uiOutput("echarts_legend")
+    div(id = "echarts-legend", class = "echarts-common-legend")
   )
 )

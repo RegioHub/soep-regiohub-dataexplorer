@@ -34,7 +34,7 @@
   background-color: #fff !important;
 }
 
-#echarts_legend {
+.echarts-common-legend {
   text-align: center;
   color: rgb(102, 102, 102);
   font: 14px / 21px sans-serif;

@@ -45,9 +45,8 @@ map_colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
       ))
   })
 
-# colorspace::qualitative_hcl(5, palette = "Dynamic")
-chart_legend_colours <- c("#DB9D85", "#9DB469", "#3DBEAB", "#87AEDF", "#DA95CC") |>
-  sprintf(fmt = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:%s;"></span>')
+# hcl.colors(5, "Dynamic")
+chart_legend_colours <- c("#DB9D85", "#9DB469", "#3DBEAB", "#87AEDF", "#DA95CC")
 
 # Server ------------------------------------------------------------------
 
@@ -142,16 +141,8 @@ function(input, output, session) {
 
   ### Update legend ----
 
-  # Update input$echarts_series
   observe({
-    runjs('get_echarts_series("v1-chart")') # ID of 1st echart
+    update_echarts_legend("v1-chart")
   }) |>
     bindEvent(map_drill_obj$curr_sel_data())
-
-  output$echarts_legend <- renderUI({
-    paste0(chart_legend_colours, input$echarts_series)[seq_along(input$echarts_series)] |>
-      sprintf(fmt = '<span style="white-space:nowrap;">%s</span>') |>
-      paste0(collapse = "&emsp;") |>
-      HTML()
-  })
 }

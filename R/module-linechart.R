@@ -73,3 +73,8 @@ e_line_p_ <- function(e, serie, bind, name = NULL, legend = TRUE,
   e$chart <- echarts4r::e_line_(e$chart, serie, bd, name, legend, y_index, x_index, coord_system, ...)
   e
 }
+
+update_echarts_legend <- function(chart_id,
+                                  session = shiny::getDefaultReactiveDomain()) {
+  session$sendCustomMessage(type = "update-echarts-legend", message = chart_id)
+}
