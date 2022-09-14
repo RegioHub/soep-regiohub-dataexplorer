@@ -2,6 +2,11 @@
   border: 0;
 }
 
+#map_var-label {
+  width: 100%;
+  text-align: center;
+}
+
 .leaflet-tooltip, .legend {
   box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px !important;
   background-color: rgb(255, 255, 255) !important;
@@ -35,7 +40,12 @@
 }
 
 .echarts-common-legend {
+  width: 90%;
   text-align: center;
   color: rgb(102, 102, 102);
-  font: 14px / 21px sans-serif;
+  font: 14px / 24px sans-serif;
+}
+
+.echarts-legend-container {
+  align-items: center;
 }

@@ -29,21 +29,29 @@ fake_data_nuts3_wide <- fake_data_nuts3 |>
   pivot_wider(names_from = name, values_from = value) |>
   split(~var)
 
+map_pal_creator <- function(x, reverse = FALSE) {
+  colorNumeric(
+    palette = colorspace::divergingx_hcl(7, "Geyser"),
+    domain = if (min(x) < 0) {
+      # Diverging palette
+      expand_range(x)
+    } else {
+      # Sequential palette
+      c(min(x) * 2 - max(x), max(x))
+    },
+    na.color = "#eaecef",
+    reverse = reverse
+  )
+}
+
 map_colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
-  lapply(\(d) {
-    d[, paste0("v", 1:4)] |>
-      lapply(\(x) colorNumeric(
-        palette = "BrBG",
-        domain = if (min(x) < 0) {
-          # Diverging palette
-          max(abs(range(x))) * c(-1, 1)
-        } else {
-          # Sequential palette
-          c(min(x) * 2 - max(x), max(x))
-        },
-        na.color = "#cccccc"
-      ))
-  })
+  lapply(select, v1:v4) |>
+  bind_rows() |>
+  lapply(\(x) list(
+    fn = map_pal_creator(x),
+    fn_rev = map_pal_creator(x, reverse = TRUE), # For legend
+    rng = expand_range(x)
+  ))
 
 # Server ------------------------------------------------------------------
 
@@ -133,6 +141,7 @@ function(input, output, session) {
     \(x) lineChartServer(
       id = paste0("v", x), # id must be name of variable to be plotted
       data = chart_data,
+      # y_ranges = lapply(map_colour_pals, \(x) round(x[["rng"]])),
       leaflet_map = map_drill_obj
     )
   )

@@ -106,7 +106,7 @@ Leafdown2 <- R6::R6Class("Leafdown2",
       ) |>
         leaflet::addPolygons( #<<
           layerId = ~all_poly_ids,
-          fillColor = map_colour_pals[[private$.curr_map_level]][[var]](private$.curr_data[[var]]),
+          fillColor = map_colour_pals[[var]][["fn"]](private$.curr_data[[var]]),
           fillOpacity = 1,
           weight = if (private$.curr_map_level == 1) 2 else 1,
           color = if (private$.curr_map_level == 1) "#fff" else "#dee2e6",
@@ -123,8 +123,9 @@ Leafdown2 <- R6::R6Class("Leafdown2",
           highlightOptions = leaflet::highlightOptions(bringToFront = TRUE, weight = 4)
         ) |>
         leaflet::addLegend(
-          pal = map_colour_pals[[private$.curr_map_level]][[var]],
-          values = private$.curr_data[[var]],
+          pal = map_colour_pals[[var]][["fn_rev"]],
+          values = map_colour_pals[[var]][["rng"]],
+          labFormat = labelFormat(transform = rev),
           opacity = 1,
           title = NULL
         ) |>
@@ -245,9 +246,13 @@ Leafdown2 <- R6::R6Class("Leafdown2",
   )
 )
 
+# Utils -------------------------------------------------------------------
+
 create_map_labels <- function(data, var) {
   lapply(
     paste0("<div>", data[["name"]], "</div><div><strong>", data[[var]], "</strong></div>"),
     shiny::HTML
   )
 }
+
+expand_range <- function(x) max(abs(range(x))) * c(-1, 1)

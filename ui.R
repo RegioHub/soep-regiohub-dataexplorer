@@ -57,18 +57,21 @@ grid_page(
       )
     ),
     hr(),
-    actionButton(
-      inputId = "drill_up",
-      label = "↑ NUTS-1"
-    ),
-    actionButton(
-      inputId = "drill_down",
-      label = "↓ NUTS-3"
+    span("Aggregate level"),
+    div(
+      actionButton(
+        inputId = "drill_up",
+        label = "↑"
+      ),
+      actionButton(
+        inputId = "drill_down",
+        label = "↓"
+      )
     ),
     hr(),
     actionButton(
       inputId = "unselect",
-      label = "Unselect All"
+      label = "Unselect all regions"
     )
   ),
   grid_card(
@@ -82,7 +85,7 @@ grid_page(
       value = 2016L,
       step = 1L,
       ticks = FALSE,
-      width = "100%",
+      width = "60%",
       sep = ""
     ),
     leaflet::leafletOutput("map_drill",
@@ -112,6 +115,7 @@ grid_page(
   grid_card(
     area = "charts_common",
     item_gap = "12px",
+    class = "echarts-legend-container",
     div(id = "echarts-legend", class = "echarts-common-legend")
   )
 )

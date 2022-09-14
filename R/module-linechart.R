@@ -1,7 +1,7 @@
 lineChartUI <- function(id, title = id) {
   ns <- shiny::NS(id)
   shiny::tagList(
-    shiny::h4(title),
+    shiny::div(title),
     echarts4r::echarts4rOutput(ns("chart"), height = "100%")
   )
 }
@@ -13,6 +13,11 @@ lineChartServer <- function(id, data, leaflet_map) {
       output$chart <- echarts4r::renderEcharts4r({
         data()[[id]] |>
           echarts4r::e_charts(year) |>
+          echarts4r::e_x_axis(
+            axisLine = list(show = FALSE),
+            axisTick = list(show = FALSE)
+          ) |>
+          # echarts4r::e_y_axis(min = y_ranges[[id]][1], max = y_ranges[[id]][2]) |>
           echarts4r::e_theme_custom(
             # Dynamic colour palette
             '{"color":["#DB9D85","#9DB469","#3DBEAB","#87AEDF","#DA95CC"]}'
