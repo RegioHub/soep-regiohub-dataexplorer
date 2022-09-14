@@ -11,25 +11,29 @@ Leafdown2 <- R6::R6Class("Leafdown2",
 
       curr_sel_ids <- private$.curr_sel_ids[[private$.curr_map_level]]
 
-      if (length(curr_sel_ids) >= 5) { #<<
-        shinyjs::alert("Cannot select more than five regions")
-        shiny::req(FALSE)
-      }
-
       if (!shape_id %in% private$.curr_poly_ids) {
         stop("Please make sure the selected shape_id is in the current level")
       }
 
       if (shape_id %in% curr_sel_ids) {
         private$.map_proxy |>
-          hideGroup(shape_id)
+          leaflet::hideGroup(shape_id)
 
         curr_sel_ids <- curr_sel_ids[!curr_sel_ids == shape_id]
       } else {
         private$.map_proxy |>
-          showGroup(shape_id)
+          leaflet::showGroup(shape_id)
 
         curr_sel_ids <- c(curr_sel_ids, shape_id)
+      }
+
+      if (length(curr_sel_ids) > 5) { #<<
+        private$.map_proxy |>
+          leaflet::hideGroup(shape_id)
+
+        shinyjs::alert("Cannot select more than five regions")
+
+        shiny::req(FALSE)
       }
 
       curr_sel_data <- private$.curr_data[private$.curr_poly_ids %in% curr_sel_ids, ]
