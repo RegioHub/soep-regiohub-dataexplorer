@@ -45,9 +45,6 @@ map_colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
       ))
   })
 
-# hcl.colors(5, "Dynamic")
-chart_legend_colours <- c("#DB9D85", "#9DB469", "#3DBEAB", "#87AEDF", "#DA95CC")
-
 # Server ------------------------------------------------------------------
 
 function(input, output, session) {
@@ -64,6 +61,7 @@ function(input, output, session) {
     input = input,
     join_map_levels_by = c("nuts1" = "nuts1")
   )
+
   update_map_drill <- reactiveVal(0)
 
   ## Monitor state of data selection ----

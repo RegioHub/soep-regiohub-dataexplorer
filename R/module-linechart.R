@@ -14,7 +14,7 @@ lineChartServer <- function(id, data, leaflet_map) {
         data()[[id]] |>
           echarts4r::e_charts(year) |>
           echarts4r::e_theme_custom(
-            # Dark 3 colour palette
+            # Dynamic colour palette
             '{"color":["#DB9D85","#9DB469","#3DBEAB","#87AEDF","#DA95CC"]}'
           ) |>
           echarts4r::e_tooltip(

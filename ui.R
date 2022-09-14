@@ -16,7 +16,7 @@ grid_page(
   ),
   row_sizes = c(
     "60px",
-    "50px",
+    "60px",
     "1fr",
     "1fr"
   ),
