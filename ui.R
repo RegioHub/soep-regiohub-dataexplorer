@@ -9,15 +9,13 @@ grid_page(
     readLines(here::here("www/misc.css"))
   ),
   layout = c(
-    "header header header header header_right header_right",
-    "controller_left map map map charts_common charts_common",
-    "controller_left map map map chart1 chart2",
-    "controller_left map map map chart3 chart4"
+    "header          header header header header_right           ",
+    "controller_left map    map    map    charts_legend_container",
+    "controller_left map    map    map    charts_area             "
   ),
   row_sizes = c(
     "60px",
     "60px",
-    "1fr",
     "1fr"
   ),
   col_sizes = c(
@@ -25,8 +23,7 @@ grid_page(
     "0.25fr",
     "0.25fr",
     "0.25fr",
-    "0.5fr",
-    "0.5fr"
+    "1fr"
   ),
   gap_size = "15px",
   useShinyjs(),
@@ -93,29 +90,62 @@ grid_page(
     )
   ),
   grid_card(
-    area = "chart1",
-    item_gap = "12px",
-    lineChartUI("v1")
-  ),
-  grid_card(
-    area = "chart2",
-    item_gap = "12px",
-    lineChartUI("v2")
-  ),
-  grid_card(
-    area = "chart3",
-    item_gap = "12px",
-    lineChartUI("v3")
-  ),
-  grid_card(
-    area = "chart4",
-    item_gap = "12px",
-    lineChartUI("v4")
-  ),
-  grid_card(
-    area = "charts_common",
+    area = "charts_legend_container",
     item_gap = "12px",
     class = "echarts-legend-container",
-    div(id = "echarts-legend", class = "echarts-common-legend")
+    div(
+      id = "echarts-legend",
+      class = "echarts-common-legend"
+    )
+  ),
+  grid_card(
+    area = "charts_area",
+    item_gap = "12px",
+    class = "charts-panel",
+    grid_container(
+      layout = c(
+        "chart1 chart2",
+        "chart3 chart4",
+        "chart5 chart6"
+      ),
+      row_sizes = c(
+        "300px",
+        "300px",
+        "300px"
+      ),
+      col_sizes = c(
+        "1fr",
+        "1fr"
+      ),
+      gap_size = "0px",
+      grid_card(
+        area = "chart1",
+        item_gap = "12px",
+        lineChartUI("v1")
+      ),
+      grid_card(
+        area = "chart2",
+        item_gap = "12px",
+        lineChartUI("v2")
+      ),
+      grid_card(
+        area = "chart3",
+        item_gap = "12px",
+        lineChartUI("v3")
+      ),
+      grid_card(
+        area = "chart4",
+        item_gap = "12px",
+        lineChartUI("v4")
+      ),
+      grid_card(
+        area = "chart5",
+        item_gap = "12px"
+      ),
+      grid_card(
+        area = "chart6",
+        item_gap = "12px"
+      )
+    )
   )
 )

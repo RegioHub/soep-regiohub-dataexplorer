@@ -39,6 +39,18 @@
   background-color: #fff !important;
 }
 
+.charts-panel {
+  overflow: scroll !important;
+}
+
+.charts-panel > .panel-content {
+  padding: 0;
+}
+
+.charts-panel > .panel-content > .grid-container {
+  width: 100%;
+}
+
 .echarts-common-legend {
   width: 90%;
   text-align: center;
