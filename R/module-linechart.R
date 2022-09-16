@@ -13,20 +13,22 @@ lineChartServer <- function(id, data, leaflet_map) {
       output$chart <- echarts4r::renderEcharts4r({
         data()[[id]] |>
           echarts4r::e_charts(year) |>
+          echarts4r::e_line_("_Nat. Avg._") |>
           echarts4r::e_x_axis(
             axisLine = list(show = FALSE),
             axisTick = list(show = FALSE)
           ) |>
-          # echarts4r::e_y_axis(min = y_ranges[[id]][1], max = y_ranges[[id]][2]) |>
           echarts4r::e_theme_custom(
-            # Dynamic colour palette
-            '{"color":["#DB9D85","#9DB469","#3DBEAB","#87AEDF","#DA95CC"]}'
+            # Grey + Dynamic colour palette
+            '{"color":["#DDDDDD","#DB9D85","#9DB469","#3DBEAB","#87AEDF","#DA95CC"]}'
           ) |>
           echarts4r::e_tooltip(
             order = "valueDesc",
             trigger = "axis",
             appendToBody = TRUE # Shown even when overflowing grid boundaries
-          )
+          ) |>
+          echarts4r::e_legend(FALSE) |>
+          echarts4r::e_legend_select("_Nat. Avg._")
       })
 
       # https://stackoverflow.com/a/41199134

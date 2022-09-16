@@ -15,18 +15,22 @@ de_bbox <- c(xmin = 5.87709, ymin = 47.27011, xmax = 15.03355, ymax = 55.05428)
 fake_data_nuts1 <- readRDS("data/fake_data_nuts1.RDS")
 fake_data_nuts3 <- readRDS("data/fake_data_nuts3.RDS")
 
+var_names <- paste0("v", 1:4)
+
 fake_data_nuts1_wide <- fake_data_nuts1 |>
   mutate(year = as.character(year)) |>
   select(-nuts1) |>
-  pivot_longer(v1:v4, names_to = "var", values_to = "value") |>
+  pivot_longer(all_of(var_names), names_to = "var", values_to = "value") |>
   pivot_wider(names_from = name, values_from = value) |>
+  mutate(`_Nat. Avg._` = rowMeans(across(-c(var, year)))) |>
   split(~var)
 
 fake_data_nuts3_wide <- fake_data_nuts3 |>
   mutate(year = as.character(year)) |>
   select(-c(nuts3, nuts1)) |>
-  pivot_longer(v1:v4, names_to = "var", values_to = "value") |>
+  pivot_longer(all_of(var_names), names_to = "var", values_to = "value") |>
   pivot_wider(names_from = name, values_from = value) |>
+  mutate(`_Nat. Avg._` = rowMeans(across(-c(var, year)))) |>
   split(~var)
 
 map_pal_creator <- function(x, reverse = FALSE) {
@@ -45,7 +49,7 @@ map_pal_creator <- function(x, reverse = FALSE) {
 }
 
 map_colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
-  lapply(select, v1:v4) |>
+  lapply(select, all_of(var_names)) |>
   bind_rows() |>
   lapply(\(x) list(
     fn = map_pal_creator(x),
@@ -137,11 +141,10 @@ function(input, output, session) {
 
   ### Draw charts ----
   lapply(
-    1:4,
+    var_names,
     \(x) lineChartServer(
-      id = paste0("v", x), # id must be name of variable to be plotted
+      id = x, # id must be name of variable to be plotted
       data = chart_data,
-      # y_ranges = lapply(map_colour_pals, \(x) round(x[["rng"]])),
       leaflet_map = map_drill_obj
     )
   )
@@ -152,4 +155,13 @@ function(input, output, session) {
     update_echarts_legend("v1-chart")
   }) |>
     bindEvent(map_drill_obj$curr_sel_data())
+
+  ### Toggle national average ----
+
+  observe({
+    paste0(var_names, "-chart") |>
+      lapply(echarts4rProxy) |>
+      lapply(e_dispatch_action_p, "legendToggleSelect", name = "_Nat. Avg._")
+  }) |>
+    bindEvent(input$chart_show_avg)
 }

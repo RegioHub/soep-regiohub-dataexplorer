@@ -9,9 +9,9 @@ grid_page(
     readLines(here::here("www/misc.css"))
   ),
   layout = c(
-    "header          header header header header_right           ",
-    "controller_left map    map    map    charts_legend_container",
-    "controller_left map    map    map    charts_area             "
+    "header          header header header header_right            header_right           ",
+    "controller_left map    map    map    charts_legend_container charts_toggle_container",
+    "controller_left map    map    map    charts_area             charts_area            "
   ),
   row_sizes = c(
     "60px",
@@ -23,7 +23,8 @@ grid_page(
     "0.25fr",
     "0.25fr",
     "0.25fr",
-    "1fr"
+    "0.85fr",
+    "0.15fr"
   ),
   gap_size = "15px",
   useShinyjs(),
@@ -96,6 +97,16 @@ grid_page(
     div(
       id = "echarts-legend",
       class = "echarts-common-legend"
+    )
+  ),
+  grid_card(
+    area = "charts_toggle_container",
+    item_gap = "12px",
+    class = "echarts-toggle-container",
+    actionButton(
+      inputId = "chart_show_avg",
+      label = HTML("National<br>average"),
+      class = "echarts-legend-button"
     )
   ),
   grid_card(
