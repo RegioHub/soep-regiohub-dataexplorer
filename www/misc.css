@@ -43,15 +43,15 @@
   overflow: scroll !important;
 }
 
-.charts-panel > .panel-content, .echarts-toggle-container > .panel-content {
+.charts-panel .panel-content {
   padding: 0;
 }
 
-.charts-panel > .panel-content > .grid-container {
+.charts-panel .grid-container {
   width: 100%;
 }
 
-.echarts-common-legend, .echarts-legend-button {
+.echarts-common-legend, .echarts-toggle-container {
   font: 14px / 24px sans-serif;
 }
 
@@ -63,6 +63,11 @@
   align-items: center;
 }
 
-.echarts-legend-container > .panel-content {
+.echarts-legend-container .panel-content, .echarts-toggle-container .panel-content {
   align-items: start !important;
+  justify-content: center !important;
+}
+
+.echarts-toggle-container div {
+  margin: 0 !important;
 }

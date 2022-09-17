@@ -24,7 +24,7 @@ grid_page(
     "0.25fr",
     "0.25fr",
     "0.85fr",
-    "0.15fr"
+    "160px"
   ),
   gap_size = "15px",
   useShinyjs(),
@@ -103,10 +103,11 @@ grid_page(
     area = "charts_toggle_container",
     item_gap = "12px",
     class = "echarts-toggle-container",
-    actionButton(
+    checkboxInput(
       inputId = "chart_show_avg",
-      label = HTML("National<br>average"),
-      class = "echarts-legend-button"
+      label = "National average",
+      value = TRUE,
+      width = "100%"
     )
   ),
   grid_card(

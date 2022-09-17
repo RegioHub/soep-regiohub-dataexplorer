@@ -161,7 +161,11 @@ function(input, output, session) {
   observe({
     paste0(var_names, "-chart") |>
       lapply(echarts4rProxy) |>
-      lapply(e_dispatch_action_p, "legendToggleSelect", name = "_Nat. Avg._")
+      lapply(
+        e_dispatch_action_p,
+        if (input$chart_show_avg) "legendSelect" else "legendUnSelect",
+        name = "_Nat. Avg._"
+      )
   }) |>
     bindEvent(input$chart_show_avg)
 }
