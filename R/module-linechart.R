@@ -85,3 +85,8 @@ update_echarts_legend <- function(chart_id,
                                   session = shiny::getDefaultReactiveDomain()) {
   session$sendCustomMessage(type = "update-echarts-legend", message = chart_id)
 }
+
+highlight_selected_echart <- function(chart_id,
+                                      session = shiny::getDefaultReactiveDomain()) {
+  session$sendCustomMessage(type = "scrollto-and-highlight-echart", message = chart_id)
+}

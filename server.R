@@ -168,4 +168,11 @@ function(input, output, session) {
       )
   }) |>
     bindEvent(input$chart_show_avg)
+
+  ### Scroll and highlight at variable selection ----
+
+  observe({
+    highlight_selected_echart(paste0(input$map_var, "-chart"))
+  }) |>
+    bindEvent(input$map_var)
 }
