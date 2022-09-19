@@ -5,7 +5,7 @@ function sleep(ms) {
 $(function () {
   Shiny.addCustomMessageHandler("update-echarts-legend",
     function (message) {
-      sleep(100).then(() => { // Wait 100ms for chart to receive change in map
+      sleep(250).then(() => { // Wait 250ms for chart to receive change in map
         const opts = get_e_charts(message).getOption();
         const series_names = opts.series.map(x => x.name);
         const colors = opts.color;
