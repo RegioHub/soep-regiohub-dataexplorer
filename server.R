@@ -3,61 +3,11 @@ library(shinyjs)
 library(leaflet)
 library(echarts4r)
 library(dplyr)
-library(tidyr)
 
-# Data --------------------------------------------------------------------
-
-de_maps <- readRDS("data/de_maps.RDS")
-
-# sf::st_bbox(de_nuts1)
-de_bbox <- c(xmin = 5.87709, ymin = 47.27011, xmax = 15.03355, ymax = 55.05428)
-
-fake_data_nuts1 <- readRDS("data/fake_data_nuts1.RDS")
-fake_data_nuts3 <- readRDS("data/fake_data_nuts3.RDS")
-
-var_names <- paste0("v", 1:4)
-
-fake_data_nuts1_wide <- fake_data_nuts1 |>
-  mutate(year = as.character(year)) |>
-  select(-nuts1) |>
-  pivot_longer(all_of(var_names), names_to = "var", values_to = "value") |>
-  pivot_wider(names_from = name, values_from = value) |>
-  mutate(`_Nat. Avg._` = rowMeans(across(-c(var, year)))) |>
-  split(~var)
-
-fake_data_nuts3_wide <- fake_data_nuts3 |>
-  mutate(year = as.character(year)) |>
-  select(-c(nuts3, nuts1)) |>
-  pivot_longer(all_of(var_names), names_to = "var", values_to = "value") |>
-  pivot_wider(names_from = name, values_from = value) |>
-  mutate(`_Nat. Avg._` = rowMeans(across(-c(var, year)))) |>
-  split(~var)
-
-map_pal_creator <- function(x, reverse = FALSE) {
-  colorNumeric(
-    palette = colorspace::divergingx_hcl(7, "Geyser"),
-    domain = if (min(x) < 0) {
-      # Diverging palette
-      expand_range(x)
-    } else {
-      # Sequential palette
-      c(min(x) * 2 - max(x), max(x))
-    },
-    na.color = "#eaecef",
-    reverse = reverse
-  )
-}
-
-map_colour_pals <- list(fake_data_nuts1, fake_data_nuts3) |>
-  lapply(select, all_of(var_names)) |>
-  bind_rows() |>
-  lapply(\(x) list(
-    fn = map_pal_creator(x),
-    fn_rev = map_pal_creator(x, reverse = TRUE), # For legend
-    rng = expand_range(x)
-  ))
-
-# Server ------------------------------------------------------------------
+map_colour_pals <- list(data_long_nuts1, data_long_nuts3) |>
+  lapply(\(level) {
+    lapply(level, create_map_pal)
+  })
 
 function(input, output, session) {
 
@@ -78,18 +28,31 @@ function(input, output, session) {
 
   ## Monitor state of data selection ----
 
-  curr_map_level <- reactive(map_drill_obj$curr_map_level) |>
+  map_level <- reactive(map_drill_obj$curr_map_level) |>
     bindEvent(input$drill_down, input$drill_up)
 
+  map_year <- reactive(as.integer(input$year))
+
   chart_data <- reactive({
-    if (curr_map_level() == 1) {
-      fake_data_nuts1_wide
+    if (map_level() == 1) {
+      data_wide_nuts1
     } else {
-      fake_data_nuts3_wide
+      data_wide_nuts3
     }
   })
 
   ## Map ----
+
+  observe({
+    years <- data_wide_nuts1[[input$map_var]]$year
+
+    shinyWidgets::updateSliderTextInput("year",
+      session = session,
+      choices = years,
+      selected = years[which.min(abs(map_year() - as.integer(years)))]
+    )
+  }) |>
+    bindEvent(input$map_var)
 
   observe({
     map_drill_obj$drill_down()
@@ -114,24 +77,25 @@ function(input, output, session) {
     curr_map_data <- map_drill_obj$curr_data |>
       select(name, starts_with("nuts"))
 
-    data <-
-      if (curr_map_level() == 1) {
+    map_drill_obj$add_data(
+      if (map_level() == 1) {
         req(!"nuts3" %in% names(curr_map_data))
         left_join(
           curr_map_data,
-          fake_data_nuts1[fake_data_nuts1$year == input$year, ],
-          by = c("name", "nuts1")
+          data_long_nuts1[[input$map_var]] |>
+            filter(year == input$year),
+          by = c("nuts1", "name")
         )
       } else {
         req("nuts3" %in% names(curr_map_data))
         left_join(
           curr_map_data,
-          fake_data_nuts3[fake_data_nuts3$year == input$year, ],
-          by = c("name", "nuts3", "nuts1")
+          data_long_nuts3[[input$map_var]] |>
+            filter(year == input$year),
+          by = c("nuts1", "nuts3", "name")
         )
       }
-
-    map_drill_obj$add_data(data)
+    )
 
     map_drill_obj$draw_leafdown(map_colour_pals, input$map_var, de_bbox) |>
       map_drill_obj$keep_zoom(input)
@@ -140,6 +104,7 @@ function(input, output, session) {
   ## Line charts ----
 
   ### Draw charts ----
+
   lapply(
     var_names,
     \(x) lineChartServer(
@@ -152,7 +117,7 @@ function(input, output, session) {
   ### Update legend ----
 
   observe({
-    update_echarts_legend("v1-chart")
+    update_echarts_legend(paste0(var_names[[1]], "-chart"))
   }) |>
     bindEvent(map_drill_obj$curr_sel_data())
 

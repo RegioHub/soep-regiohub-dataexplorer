@@ -7,6 +7,10 @@
   text-align: center;
 }
 
+#map_var {
+  text-overflow: ellipsis;
+}
+
 .leaflet-tooltip, .legend {
   box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px !important;
   background-color: rgb(255, 255, 255) !important;

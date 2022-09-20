@@ -18,6 +18,7 @@ lineChartServer <- function(id, data, leaflet_map) {
             axisLine = list(show = FALSE),
             axisTick = list(show = FALSE)
           ) |>
+          echarts4r::e_y_axis(scale = TRUE) |>
           echarts4r::e_theme_custom(
             # Grey + Dynamic colour palette
             '{"color":["#DDDDDD","#DB9D85","#9DB469","#3DBEAB","#87AEDF","#DA95CC"]}'

@@ -49,10 +49,8 @@ grid_page(
     selectInput(
       inputId = "map_var",
       label = "Variable",
-      choices = paste0(
-        "v",
-        1:4
-      )
+      choices = var_names,
+      selectize = FALSE
     ),
     hr(),
     span("Aggregate level"),
@@ -75,16 +73,11 @@ grid_page(
   grid_card(
     area = "map",
     item_gap = "12px",
-    sliderInput(
+    shinyWidgets::sliderTextInput(
       inputId = "year",
       label = "Year",
-      min = 2016L,
-      max = 2019L,
-      value = 2016L,
-      step = 1L,
-      ticks = FALSE,
-      width = "60%",
-      sep = ""
+      choices = "",
+      width = "60%"
     ),
     leaflet::leafletOutput("map_drill",
       height = "100%"
@@ -117,11 +110,9 @@ grid_page(
     grid_container(
       layout = c(
         "chart1 chart2",
-        "chart3 chart4",
-        "chart5 chart6"
+        "chart3 chart4"
       ),
       row_sizes = c(
-        "300px",
         "300px",
         "300px"
       ),
@@ -133,30 +124,22 @@ grid_page(
       grid_card(
         area = "chart1",
         item_gap = "12px",
-        lineChartUI("v1")
+        lineChartUI("Wahlbeteiligung")
       ),
       grid_card(
         area = "chart2",
         item_gap = "12px",
-        lineChartUI("v2")
+        lineChartUI("Binnenwanderungssaldo")
       ),
       grid_card(
         area = "chart3",
         item_gap = "12px",
-        lineChartUI("v3")
+        lineChartUI("networking")
       ),
       grid_card(
         area = "chart4",
         item_gap = "12px",
-        lineChartUI("v4")
-      ),
-      grid_card(
-        area = "chart5",
-        item_gap = "12px"
-      ),
-      grid_card(
-        area = "chart6",
-        item_gap = "12px"
+        lineChartUI("life_sat")
       )
     )
   )
