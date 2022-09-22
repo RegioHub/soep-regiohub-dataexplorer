@@ -102,13 +102,13 @@ Leafdown2 <- R6::R6Class("Leafdown2",
           color = if (private$.curr_map_level == 1) "#fff" else "#dee2e6",
           opacity = 1,
           label = create_map_labels(private$.curr_data),
-          highlight = leaflet::highlightOptions(fillColor = "#dee2e6")
+          highlight = leaflet::highlightOptions(fillColor = "#fcce25")
         ) |>
         leaflet::addPolylines(
           group = all_poly_ids,
           stroke = TRUE,
           weight = 3,
-          color = "#666", #<<
+          color = "#fcce25", #<<
           opacity = 1,
           highlightOptions = leaflet::highlightOptions(bringToFront = TRUE, weight = 4)
         ) |>
@@ -213,7 +213,7 @@ map_pal_creator <- function(x, reverse = FALSE) {
   if (min(x, na.rm = TRUE) < 0) {
     colours <- colorspace::divergingx_hcl(7, "Geyser", rev = TRUE)
   } else {
-    colours <- colorspace::divergingx_hcl(13, "Geyser", rev = TRUE)[7:13]
+    colours <- viridisLite::mako(7, direction = -1)
   }
 
   leaflet::colorNumeric(
