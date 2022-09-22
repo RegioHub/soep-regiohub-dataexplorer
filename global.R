@@ -1,8 +1,10 @@
 var_names <- c(
-  "Wahlbeteiligung",
-  "Binnenwanderungssaldo",
-  "networking",
-  "life_sat"
+  "bmi",
+  "satisfaction_health",
+  "satisfaction_life",
+  "worries_finances",
+  "turnout",
+  "trust"
 ) |>
   setNames(nm = _)
 

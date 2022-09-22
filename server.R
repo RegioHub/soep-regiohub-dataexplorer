@@ -129,7 +129,7 @@ function(input, output, session) {
       lapply(
         e_dispatch_action_p,
         if (input$chart_show_avg) "legendSelect" else "legendUnSelect",
-        name = "_Nat. Avg._"
+        name = "(Durchschnitt)"
       )
   }) |>
     bindEvent(input$chart_show_avg)

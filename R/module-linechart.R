@@ -13,7 +13,7 @@ lineChartServer <- function(id, data, leaflet_map) {
       output$chart <- echarts4r::renderEcharts4r({
         data()[[id]] |>
           echarts4r::e_charts(year) |>
-          echarts4r::e_line_("_Nat. Avg._") |>
+          echarts4r::e_line_("(Durchschnitt)") |>
           echarts4r::e_x_axis(
             axisLine = list(show = FALSE),
             axisTick = list(show = FALSE)
@@ -29,7 +29,7 @@ lineChartServer <- function(id, data, leaflet_map) {
             appendToBody = TRUE # Shown even when overflowing grid boundaries
           ) |>
           echarts4r::e_legend(FALSE) |>
-          echarts4r::e_legend_select("_Nat. Avg._")
+          echarts4r::e_legend_select("(Durchschnitt)")
       })
 
       # https://stackoverflow.com/a/41199134

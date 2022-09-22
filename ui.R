@@ -108,11 +108,14 @@ grid_page(
     item_gap = "12px",
     class = "charts-panel",
     grid_container(
+      flag_mismatches = FALSE,
       layout = c(
         "chart1 chart2",
-        "chart3 chart4"
+        "chart3 chart4",
+        "chart5 chart6"
       ),
       row_sizes = c(
+        "300px",
         "300px",
         "300px"
       ),
@@ -121,26 +124,13 @@ grid_page(
         "1fr"
       ),
       gap_size = "0px",
-      grid_card(
-        area = "chart1",
-        item_gap = "12px",
-        lineChartUI("Wahlbeteiligung")
-      ),
-      grid_card(
-        area = "chart2",
-        item_gap = "12px",
-        lineChartUI("Binnenwanderungssaldo")
-      ),
-      grid_card(
-        area = "chart3",
-        item_gap = "12px",
-        lineChartUI("networking")
-      ),
-      grid_card(
-        area = "chart4",
-        item_gap = "12px",
-        lineChartUI("life_sat")
-      )
+      lapply(seq_along(var_names), \(x) {
+        grid_card(
+          area = paste0("chart", x),
+          item_gap = "12px",
+          lineChartUI(var_names[[x]])
+        )
+      })
     )
   )
 )
