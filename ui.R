@@ -1,8 +1,3 @@
-library(shiny)
-library(gridlayout)
-library(bslib)
-library(shinyjs)
-
 grid_page(
   theme = bs_add_rules(
     bs_theme(version = 5),
@@ -24,7 +19,7 @@ grid_page(
     "0.25fr",
     "0.25fr",
     "0.85fr",
-    "160px"
+    "180px"
   ),
   gap_size = "15px",
   useShinyjs(),
@@ -48,26 +43,26 @@ grid_page(
     item_gap = "12px",
     selectInput(
       inputId = "map_var",
-      label = "Variable",
+      label = "Indikator",
       choices = var_names,
       selectize = FALSE
     ),
     hr(),
-    span("Aggregate level"),
-    div(
-      actionButton(
-        inputId = "drill_up",
-        label = "↑"
-      ),
-      actionButton(
-        inputId = "drill_down",
-        label = "↓"
-      )
+    actionButton(
+      inputId = "drill_up",
+      label = "Bundesländer",
+      width = "100%"
+    ),
+    actionButton(
+      inputId = "drill_down",
+      label = "Kreise",
+      width = "100%"
     ),
     hr(),
     actionButton(
       inputId = "unselect",
-      label = "Unselect all regions"
+      label = "Auswahl aufheben",
+      width = "100%"
     )
   ),
   grid_card(
@@ -75,7 +70,7 @@ grid_page(
     item_gap = "12px",
     shinyWidgets::sliderTextInput(
       inputId = "year",
-      label = "Year",
+      label = "Jahr",
       choices = "",
       width = "60%"
     ),
@@ -98,7 +93,7 @@ grid_page(
     class = "echarts-toggle-container",
     checkboxInput(
       inputId = "chart_show_avg",
-      label = "National average",
+      label = "Bundesdurchschnitt",
       value = TRUE,
       width = "100%"
     )
@@ -112,9 +107,11 @@ grid_page(
       layout = c(
         "chart1 chart2",
         "chart3 chart4",
-        "chart5 chart6"
+        "chart5 chart6",
+        "chart7 chart8"
       ),
       row_sizes = c(
+        "300px",
         "300px",
         "300px",
         "300px"

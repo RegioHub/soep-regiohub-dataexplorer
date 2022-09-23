@@ -9,11 +9,11 @@ Leafdown2 <- R6::R6Class("Leafdown2",
     .toggle_shape_select = function(shape_id) {
       checkmate::assert_character(shape_id, min.chars = 1)
 
-      curr_sel_ids <- private$.curr_sel_ids[[private$.curr_map_level]]
-
       if (!shape_id %in% private$.curr_poly_ids) {
         stop("Please make sure the selected shape_id is in the current level")
       }
+
+      curr_sel_ids <- private$.curr_sel_ids[[private$.curr_map_level]]
 
       if (shape_id %in% curr_sel_ids) {
         private$.map_proxy |>

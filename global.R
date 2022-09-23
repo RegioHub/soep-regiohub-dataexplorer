@@ -1,8 +1,18 @@
+library(shiny)
+library(gridlayout)
+library(bslib)
+library(shinyjs)
+library(leaflet)
+library(echarts4r)
+library(dplyr)
+
 var_names <- c(
+  "hospital_beds",
+  "pop_density",
   "bmi",
   "satisfaction_health",
-  "satisfaction_life",
   "worries_finances",
+  "satisfaction_life",
   "turnout",
   "trust"
 ) |>

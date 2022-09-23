@@ -1,9 +1,3 @@
-library(shiny)
-library(shinyjs)
-library(leaflet)
-library(echarts4r)
-library(dplyr)
-
 map_colour_pals <- list(data_long_nuts1, data_long_nuts3) |>
   lapply(\(level) {
     lapply(level, create_map_pal)
