@@ -29,4 +29,22 @@ $(function () {
       });
     }
   );
+
+  Shiny.addCustomMessageHandler("make-map-shapes-transparent",
+    function (message) {
+      sleep(250).then(() => {
+        const map_shapes = document.getElementsByClassName("map-shapes");
+        [...map_shapes].forEach(x => x.style.opacity = 0.15);
+      });
+    }
+  );
+
+  Shiny.addCustomMessageHandler("make-map-shapes-opaque",
+    function (message) {
+      sleep(250).then(() => {
+        const map_shapes = document.getElementsByClassName("map-shapes");
+        [...map_shapes].forEach(x => x.style.opacity = 1);
+      });
+    }
+  );
 });

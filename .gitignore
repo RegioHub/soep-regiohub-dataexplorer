@@ -4,3 +4,4 @@
 .Ruserdata
 rsconnect
 data-raw
+data/hospitals.RDS

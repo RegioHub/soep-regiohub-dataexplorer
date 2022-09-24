@@ -47,6 +47,12 @@ grid_page(
       choices = var_names,
       selectize = FALSE
     ),
+    checkboxInput(
+      inputId = "map_show_hospitals",
+      label = "Krankenhäuser anzeigen",
+      value = FALSE,
+      width = "100%"
+    ),
     hr(),
     actionButton(
       inputId = "drill_up",

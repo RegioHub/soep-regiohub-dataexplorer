@@ -42,6 +42,16 @@ Leafdown2 <- R6::R6Class("Leafdown2",
       private$.curr_sel_data(curr_sel_data)
     }
   ),
+  active = list(
+    # Expose leaflet shiny proxy
+    map_proxy = function(value) { #<<
+      if (missing(value)) {
+        private$.map_proxy
+      } else {
+        stop("`$map_proxy` is read only", call. = FALSE)
+      }
+    }
+  ),
   public = list(
     # Pass IDs of actionButtons to object (for shinyjs disable/enable)
     initialize = function(spdfs_list, map_output_id,
@@ -102,7 +112,8 @@ Leafdown2 <- R6::R6Class("Leafdown2",
           color = if (private$.curr_map_level == 1) "#fff" else "#dee2e6",
           opacity = 1,
           label = create_map_labels(private$.curr_data),
-          highlight = leaflet::highlightOptions(fillColor = "#fcce25")
+          highlight = leaflet::highlightOptions(fillColor = "#fcce25"),
+          options = leaflet::pathOptions(className = "map-shapes")
         ) |>
         leaflet::addPolylines(
           group = all_poly_ids,
@@ -194,9 +205,11 @@ Leafdown2 <- R6::R6Class("Leafdown2",
 
 # Utils -------------------------------------------------------------------
 
-create_map_labels <- function(data) {
+create_map_labels <- function(data, prefix = "", suffix = "") {
   lapply(
-    paste0("<div>", data[["name"]], "</div><div><strong>", data[["value"]], "</strong></div>"),
+    paste0(
+      "<div>", data[["name"]], "</div><div><strong>",
+      prefix, data[["value"]], suffix, "</strong></div>"),
     shiny::HTML
   )
 }

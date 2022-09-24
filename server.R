@@ -7,6 +7,8 @@ function(input, output, session) {
 
   ## Startup ----
 
+  hideElement("map_show_hospitals")
+
   disable("drill_up")
 
   map_drill_obj <- Leafdown2$new(
@@ -37,6 +39,8 @@ function(input, output, session) {
 
   ## Map ----
 
+  ### Reactive time slider ----
+
   observe({
     years <- data_wide_nuts1[[input$map_var]]$year
 
@@ -47,6 +51,8 @@ function(input, output, session) {
     )
   }) |>
     bindEvent(input$map_var)
+
+  ### Leafdown boilerplate ----
 
   observe({
     map_drill_obj$drill_down()
@@ -94,6 +100,50 @@ function(input, output, session) {
     map_drill_obj$draw_leafdown(map_colour_pals, input$map_var, de_bbox) |>
       map_drill_obj$keep_zoom(input)
   })
+
+  ### Show points for hospitals ----
+
+  observe({
+    if (input$map_var == "hospital_beds") {
+      showElement("map_show_hospitals")
+    } else {
+      hideElement("map_show_hospitals")
+    }
+  }) |>
+    bindEvent(input$map_var)
+
+  observe({
+    updateCheckboxInput("map_show_hospitals", session = session, value = FALSE)
+  }) |>
+    bindEvent(input$drill_up, input$drill_down, input$map_var)
+
+  observe({
+    req(hospitals[[input$year]]$long)
+
+    if (input$map_show_hospitals) {
+      session$sendCustomMessage(type = "make-map-shapes-transparent", message = "")
+
+      map_drill_obj$map_proxy |>
+        addCircleMarkers(
+          group = "hospitals",
+          lng = hospitals[[input$year]]$long,
+          lat = hospitals[[input$year]]$lat,
+          radius = sqrt(hospitals[[input$year]]$value) / 5,
+          fillColor = "#0d6efd",
+          fillOpacity = 0.4,
+          weight = 1,
+          color = "#0d6efd",
+          opacity = 1,
+          label = create_map_labels(hospitals[[input$year]], suffix = " Betten")
+        )
+    } else {
+      map_drill_obj$map_proxy |>
+        clearGroup("hospitals")
+
+      session$sendCustomMessage(type = "make-map-shapes-opaque", message = "")
+    }
+  }) |>
+    bindEvent(input$year, input$map_show_hospitals)
 
   ## Line charts ----
 
