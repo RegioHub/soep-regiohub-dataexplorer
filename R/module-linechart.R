@@ -44,7 +44,8 @@ lineChartServer <- function(id, data, leaflet_map) {
           echarts4r::e_line_("(Durchschnitt)") |>
           echarts4r::e_x_axis(
             axisLine = list(show = FALSE),
-            axisTick = list(show = FALSE)
+            axisTick = list(show = FALSE),
+            data = as.character(1984:2021)
           ) |>
           echarts4r::e_y_axis(scale = TRUE) |>
           echarts4r::e_theme_custom(
