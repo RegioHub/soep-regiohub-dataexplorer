@@ -1,11 +1,23 @@
 @import url('https://rsms.me/inter/inter.css');
 
-html {
+body {
   font-family: Inter, sans-serif !important;
 }
 
 .card {
   border: 0;
+}
+
+.title-container img {
+  margin-right: 12px;
+}
+
+.title-container h3::after {
+  content: '0.1.0';
+  font-size: 75%;
+  font-weight: 400;
+  color: #666;
+  margin-left: 8px;
 }
 
 #map_var {

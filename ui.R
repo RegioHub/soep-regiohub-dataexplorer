@@ -1,10 +1,22 @@
+grid_card_title <- grid_card_text(
+  area = "header",
+  content = "SOEP RegioHub DataExplorer",
+  h_align = "start",
+  alignment = "start",
+  icon = "lwc-logo.svg",
+  wrapping_tag = "h3",
+  is_title = TRUE
+)
+
+grid_card_title$attribs$class <- paste(grid_card_title$attribs$class, "title-container")
+
 grid_page(
   theme = bs_add_rules(
     bs_theme(version = 5),
     readLines("www/misc.css")
   ),
   layout = c(
-    "header          header header_right            header_right           ",
+    "header          header header                  header_right           ",
     "controller_left map    charts_legend_container charts_toggle_container",
     "controller_left map    charts_area             charts_area            ",
     "footer          footer footer                  footer                 "
@@ -25,14 +37,7 @@ grid_page(
   use_prompt(),
   useShinyjs(),
   tags$script(src = "misc.js"),
-  grid_card_text(
-    area = "header",
-    content = "",
-    h_align = "start",
-    alignment = "start",
-    icon = "lwc-logo.svg",
-    is_title = TRUE
-  ),
+  grid_card_title,
   grid_card_text(
     area = "header_right",
     content = "",
@@ -134,7 +139,7 @@ grid_page(
       lapply(seq_along(var_names), \(x) {
         grid_card(
           area = paste0("chart", x),
-          item_gap = "12px",
+          item_gap = "0",
           lineChartUI(var_names[[x]], metadata)
         )
       })
