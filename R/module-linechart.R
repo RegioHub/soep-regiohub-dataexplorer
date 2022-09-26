@@ -19,7 +19,7 @@ lineChartUI <- function(id, metadata) {
       class = "info-tooltip",
       metadata$title,
       shiny::icon("question", style = "font-size:60%;vertical-align:super;"),
-      style = "margin-bottom: 12px;"
+      style = "margin-bottom: 12px; font-weight: 700;"
     ) |>
       prompter::add_prompt(
         message = tooltip,

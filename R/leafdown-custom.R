@@ -130,7 +130,7 @@ Leafdown2 <- R6::R6Class("Leafdown2",
           opacity = 1,
           title = NULL
         ) |>
-        leafem::addHomeButton(default_bbox, "\u21ba", "topleft")
+        leafem::addHomeButton(default_bbox, "⛶", "topleft")
 
       if (private$.curr_map_level != 1) { #<<
         map <- map |>
