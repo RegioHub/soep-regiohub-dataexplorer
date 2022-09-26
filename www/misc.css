@@ -1,7 +1,7 @@
-@import url('https://rsms.me/inter/inter.css');
+ @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
 
 body {
-  font-family: Inter, sans-serif !important;
+  font-family: Roboto, sans-serif !important;
 }
 
 .card {
@@ -25,11 +25,11 @@ body {
 }
 
 #map_var_info {
-  font: 14px / 21px Inter, sans-serif;
+  font: 14px / 21px Roboto, sans-serif;
 }
 
 .checkbox {
-  font: 14px / 24px sans-serif;
+  font: 14px / 24px Roboto, sans-serif;
 }
 
 .checkbox label {
@@ -53,7 +53,8 @@ body {
   border-width: 0 !important;
   border-radius: 4px !important;
   color: rgb(102, 102, 102) !important;
-  font: 14px / 21px Inter, sans-serif !important;
+  font: 14px / 21px Roboto, sans-serif !important;
+  font-variant-numeric: tabular-nums !important;
   padding: 10px !important;
 }
 
@@ -77,7 +78,7 @@ body {
 
 .leaflet-container {
   background-color: #fff !important;
-  font: 14px / 21px Inter, sans-serif !important;
+  font: 14px / 21px Roboto, sans-serif !important;
 }
 
 .leaflet-control-attribution {
@@ -98,7 +99,7 @@ body {
 
 .echarts-common-legend,
 .echarts-toggle-container {
-  font: 14px / 24px Inter, sans-serif;
+  font: 14px / 24px Roboto, sans-serif;
 }
 
 .echarts-common-legend {
@@ -124,6 +125,6 @@ body {
 }
 
 [class*="hint--"][aria-label]::after {
-  font: 14px / 21px Inter, sans-serif;
+  font: 14px / 21px Roboto, sans-serif;
   white-space: pre-wrap;
 }

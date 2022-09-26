@@ -18,7 +18,8 @@ lineChartUI <- function(id, metadata) {
     shiny::div(
       class = "info-tooltip",
       metadata$title,
-      shiny::icon("question", style = "font-size:60%;vertical-align:super;")
+      shiny::icon("question", style = "font-size:60%;vertical-align:super;"),
+      style = "margin-bottom: 12px;"
     ) |>
       prompter::add_prompt(
         message = tooltip,
@@ -56,7 +57,10 @@ lineChartServer <- function(id, data, leaflet_map) {
             appendToBody = TRUE # Shown even when overflowing grid boundaries
           ) |>
           echarts4r::e_legend(FALSE) |>
-          echarts4r::e_legend_select("(Durchschnitt)")
+          echarts4r::e_legend_select("(Durchschnitt)") |>
+          echarts4r::e_text_style(
+            fontFamily = "Roboto, sans-serif"
+          )
       })
 
       # https://stackoverflow.com/a/41199134

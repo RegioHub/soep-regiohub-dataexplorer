@@ -134,7 +134,7 @@ function(input, output, session) {
           weight = 1,
           color = "#0d6efd",
           opacity = 1,
-          label = create_map_labels(hospitals[[input$year]], suffix = " Betten")
+          label = create_map_labels(hospitals[[input$year]], prefix = "Krankenhaus: ", suffix = " Betten")
         )
     } else {
       map_drill_obj$map_proxy |>

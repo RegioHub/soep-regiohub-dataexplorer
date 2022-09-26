@@ -1,6 +1,6 @@
 grid_card_title <- grid_card_text(
   area = "header",
-  content = "SOEP RegioHub DataExplorer",
+  content = "SOEP-RegioHub DataExplorer",
   h_align = "start",
   alignment = "start",
   icon = "lwc-logo.svg",
