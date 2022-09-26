@@ -1,7 +1,34 @@
-lineChartUI <- function(id, title = id) {
+lineChartUI <- function(id, metadata) {
   ns <- shiny::NS(id)
+
+  metadata <- metadata[metadata$id == id, ]
+
+  if (is.na(metadata$note)) {
+    tooltip <- paste0(
+      "Datenquelle:\n", metadata$source
+    )
+  } else {
+    tooltip <- paste0(
+      "Anmerkung:\n", metadata$note, "\n\n",
+      "Datenquelle:\n", metadata$source
+    )
+  }
+
   shiny::tagList(
-    shiny::div(title),
+    shiny::div(
+      class = "info-tooltip",
+      metadata$title,
+      shiny::icon("question", style = "font-size:60%;vertical-align:super;")
+    ) |>
+      prompter::add_prompt(
+        message = tooltip,
+        rounded = TRUE,
+        size = "large"
+      ),
+    shiny::div(
+      metadata$subtitle,
+      style = "font-size:14px;line-height:1;color:#666;"
+    ),
     echarts4r::echarts4rOutput(ns("chart"), height = "100%")
   )
 }

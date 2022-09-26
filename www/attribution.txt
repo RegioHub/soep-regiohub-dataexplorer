@@ -1,0 +1,1 @@
+<span style="font-size:11px;color:#666;">Entwickelt von <a href="https://lo-ng.netlify.app/">Long Nguyen</a>, LeibnizWissenschaftsCampus SOEP RegioHub, Universität Bielefeld. Veröffentlicht unter der Lizenz <a href="https://creativecommons.org/licenses/by/4.0/legalcode">CC-by 4.0</a></span>.

@@ -1,27 +1,28 @@
 grid_page(
   theme = bs_add_rules(
     bs_theme(version = 5),
-    readLines(here::here("www/misc.css"))
+    readLines("www/misc.css")
   ),
   layout = c(
-    "header          header header header header_right            header_right           ",
-    "controller_left map    map    map    charts_legend_container charts_toggle_container",
-    "controller_left map    map    map    charts_area             charts_area            "
+    "header          header header_right            header_right           ",
+    "controller_left map    charts_legend_container charts_toggle_container",
+    "controller_left map    charts_area             charts_area            ",
+    "footer          footer footer                  footer                 "
   ),
   row_sizes = c(
     "60px",
     "60px",
-    "1fr"
+    "1fr",
+    "30px"
   ),
   col_sizes = c(
     "0.25fr",
-    "0.25fr",
-    "0.25fr",
-    "0.25fr",
-    "0.85fr",
+    "0.75fr",
+    "0.8fr",
     "180px"
   ),
   gap_size = "15px",
+  use_prompt(),
   useShinyjs(),
   tags$script(src = "misc.js"),
   grid_card_text(
@@ -44,7 +45,7 @@ grid_page(
     selectInput(
       inputId = "map_var",
       label = "Indikator",
-      choices = var_names,
+      choices = setNames(var_names, metadata$title),
       selectize = FALSE
     ),
     checkboxInput(
@@ -82,7 +83,8 @@ grid_page(
     ),
     leaflet::leafletOutput("map_drill",
       height = "100%"
-    )
+    ),
+    textOutput("map_var_info")
   ),
   grid_card(
     area = "charts_legend_container",
@@ -131,9 +133,14 @@ grid_page(
         grid_card(
           area = paste0("chart", x),
           item_gap = "12px",
-          lineChartUI(var_names[[x]])
+          lineChartUI(var_names[[x]], metadata)
         )
       })
     )
+  ),
+  grid_card_text(
+    area = "footer",
+    content = HTML(readLines("www/attribution.txt")[[1]]),
+    wrapping_tag = "span"
   )
 )

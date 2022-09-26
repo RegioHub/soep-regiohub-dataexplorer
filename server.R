@@ -184,4 +184,12 @@ function(input, output, session) {
     highlight_selected_echart(paste0(input$map_var, "-chart"))
   }) |>
     bindEvent(input$map_var)
+
+  ## Information, descriptions etc. ---
+
+  output$map_var_info <- renderText({
+    curr_metadata <- metadata[metadata$id == input$map_var, ]
+
+    paste0(curr_metadata$title, " (", curr_metadata$subtitle, ")")
+  })
 }

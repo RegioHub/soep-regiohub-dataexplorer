@@ -1,6 +1,7 @@
 library(shiny)
 library(gridlayout)
 library(bslib)
+library(prompter)
 library(shinyjs)
 library(leaflet)
 library(echarts4r)
@@ -44,3 +45,5 @@ de_maps <- readRDS("data/de_maps.RDS")
 de_bbox <- c(xmin = 5.87709, ymin = 47.27011, xmax = 15.03355, ymax = 55.05428)
 
 hospitals <- readRDS("data/hospitals.RDS")
+
+metadata <- readRDS("data/metadata.RDS")

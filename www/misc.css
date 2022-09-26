@@ -12,6 +12,10 @@ html {
   text-overflow: ellipsis;
 }
 
+#map_var_info {
+  font: 14px / 21px Inter, sans-serif;
+}
+
 .checkbox {
   font: 14px / 24px sans-serif;
 }
@@ -22,6 +26,12 @@ html {
 
 .checkbox span {
   margin-left: 4px;
+}
+
+.irs-bar--single {
+  background: unset !important;
+  border-top: unset !important;
+  border-bottom: unset !important;
 }
 
 .leaflet-tooltip,
@@ -58,6 +68,10 @@ html {
   font: 14px / 21px Inter, sans-serif !important;
 }
 
+.leaflet-control-attribution {
+  display: none;
+}
+
 .charts-panel {
   overflow: scroll !important;
 }
@@ -91,4 +105,13 @@ html {
 
 .echarts-toggle-container div {
   margin: 0 !important;
+}
+
+.info-tooltip {
+  cursor: help;
+}
+
+[class*="hint--"][aria-label]::after {
+  font: 14px / 21px Inter, sans-serif;
+  white-space: pre-wrap;
 }
