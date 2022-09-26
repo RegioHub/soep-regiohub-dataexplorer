@@ -15,7 +15,8 @@ var_names <- c(
   "worries_finances",
   "satisfaction_life",
   "turnout",
-  "trust"
+  "trust",
+  "soziologie"
 ) |>
   setNames(nm = _)
 
