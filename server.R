@@ -71,6 +71,12 @@ function(input, output, session) {
   }) |>
     bindEvent(input$unselect)
 
+  observe({
+    n_selected <- nrow(map_drill_obj$curr_sel_data())
+    if (n_selected) enable("unselect") else disable("unselect")
+  }) |>
+    bindEvent(map_drill_obj$curr_sel_data())
+
   output$map_drill <- renderLeaflet({
     update_map_drill()
 
@@ -97,7 +103,7 @@ function(input, output, session) {
       }
     )
 
-    map_drill_obj$draw_leafdown(map_colour_pals, input$map_var, de_bbox) |>
+    map_drill_obj$draw_leafdown(map_colour_pals, input$map_var, input$map_log_scale, de_bbox) |>
       map_drill_obj$keep_zoom(input)
   })
 
@@ -115,7 +121,7 @@ function(input, output, session) {
   observe({
     updateCheckboxInput("map_show_hospitals", session = session, value = FALSE)
   }) |>
-    bindEvent(input$drill_up, input$drill_down, input$map_var)
+    bindEvent(input$drill_up, input$drill_down, input$map_var, input$map_log_scale)
 
   observe({
     req(hospitals[[input$year]]$long)

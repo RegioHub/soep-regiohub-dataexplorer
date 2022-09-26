@@ -88,9 +88,10 @@ Leafdown2 <- R6::R6Class("Leafdown2",
       private$init_click_observer(input, map_output_id)
     },
 
+    # Enable log transforming colour scale
     # Finer grained zooming
     # New highlighting style of selected regions
-    draw_leafdown = function(map_colour_pals, var, default_bbox) {
+    draw_leafdown = function(map_colour_pals, var, log, default_bbox) {
       curr_spdf <- private$.curr_spdf
       if (!is.null(private$.curr_data)) {
         curr_spdf@data <- private$.curr_data
@@ -100,13 +101,29 @@ Leafdown2 <- R6::R6Class("Leafdown2",
 
       all_poly_ids <- private$.curr_poly_ids
 
+      if (log) { #<<
+        trans <- log1p
+        undo_trans <- expm1
+
+        pal_fn <- map_colour_pals[[private$.curr_map_level]][[var]][["fn_log"]]
+        pal_fn_rev <- map_colour_pals[[private$.curr_map_level]][[var]][["fn_rev_log"]]
+      } else {
+        trans <- identity
+        undo_trans <- identity
+
+        pal_fn <- map_colour_pals[[private$.curr_map_level]][[var]][["fn"]]
+        pal_fn_rev <- map_colour_pals[[private$.curr_map_level]][[var]][["fn_rev"]]
+      }
+
+      pal_rng <- map_colour_pals[[private$.curr_map_level]][[var]][["rng"]]
+
       map <- leaflet::leaflet(
         curr_spdf,
         options = leaflet::leafletOptions(zoomDelta = .25, zoomSnap = .25) #<<
       ) |>
         leaflet::addPolygons( #<<
           layerId = ~all_poly_ids,
-          fillColor = map_colour_pals[[private$.curr_map_level]][[var]][["fn"]](private$.curr_data[["value"]]),
+          fillColor = pal_fn(trans(private$.curr_data[["value"]])),
           fillOpacity = 1,
           weight = if (private$.curr_map_level == 1) 2 else 1,
           color = if (private$.curr_map_level == 1) "#fff" else "#dee2e6",
@@ -124,9 +141,13 @@ Leafdown2 <- R6::R6Class("Leafdown2",
           highlightOptions = leaflet::highlightOptions(bringToFront = TRUE, weight = 4)
         ) |>
         leaflet::addLegend(
-          pal = map_colour_pals[[private$.curr_map_level]][[var]][["fn_rev"]],
-          values = map_colour_pals[[private$.curr_map_level]][[var]][["rng"]],
-          labFormat = labelFormat(transform = rev),
+          pal = pal_fn_rev,
+          values = trans(pal_rng),
+          labFormat = labelFormat(
+            big.mark = "",
+            digits = if (pal_rng[2] > 1000) 0 else 1,
+            transform = \(x) rev(undo_trans(x))
+          ),
           opacity = 1,
           title = NULL
         ) |>
@@ -209,7 +230,8 @@ create_map_labels <- function(data, prefix = "", suffix = "") {
   lapply(
     paste0(
       "<div>", data[["name"]], "</div><div><strong>",
-      prefix, data[["value"]], suffix, "</strong></div>"),
+      prefix, data[["value"]], suffix, "</strong></div>"
+    ),
     shiny::HTML
   )
 }
@@ -217,13 +239,19 @@ create_map_labels <- function(data, prefix = "", suffix = "") {
 create_map_pal <- function(data) {
   list(
     fn = map_pal_creator(data[["value"]]),
+    fn_log = map_pal_creator(data[["value"]], log = TRUE),
     fn_rev = map_pal_creator(data[["value"]], reverse = TRUE), # For legend
+    fn_rev_log = map_pal_creator(data[["value"]], reverse = TRUE, log = TRUE),
     rng = expand_range(data[["value"]])
   )
 }
 
-map_pal_creator <- function(x, reverse = FALSE) {
+map_pal_creator <- function(x, reverse = FALSE, log = FALSE) {
+  trans <- if (log) log1p else identity
+
   if (min(x, na.rm = TRUE) < 0) {
+    if (log) stop("Cannot compute logarithms for negative values")
+
     colours <- colorspace::divergingx_hcl(7, "Geyser", rev = TRUE)
   } else {
     colours <- viridisLite::mako(7, direction = -1)
@@ -231,7 +259,7 @@ map_pal_creator <- function(x, reverse = FALSE) {
 
   leaflet::colorNumeric(
     palette = colours,
-    domain = expand_range(x),
+    domain = expand_range(trans(x)),
     na.color = "#eaecef",
     reverse = reverse
   )

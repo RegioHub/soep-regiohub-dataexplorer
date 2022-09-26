@@ -8,8 +8,8 @@ library(echarts4r)
 library(dplyr)
 
 var_names <- c(
-  "hospital_beds",
   "pop_density",
+  "hospital_beds",
   "bmi",
   "satisfaction_health",
   "worries_finances",
@@ -47,4 +47,4 @@ de_bbox <- c(xmin = 5.87709, ymin = 47.27011, xmax = 15.03355, ymax = 55.05428)
 
 hospitals <- readRDS("data/hospitals.RDS")
 
-metadata <- readRDS("data/metadata.RDS")
+metadata <- readRDS("data/metadata.RDS")[var_names, ]

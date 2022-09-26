@@ -54,6 +54,12 @@ grid_page(
       selectize = FALSE
     ),
     checkboxInput(
+      inputId = "map_log_scale",
+      label = "Logarithmische Farbskala",
+      value = FALSE,
+      width = "100%"
+    ),
+    checkboxInput(
       inputId = "map_show_hospitals",
       label = "Krankenhäuser anzeigen",
       value = FALSE,

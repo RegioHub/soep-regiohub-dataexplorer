@@ -86,7 +86,7 @@ body {
 }
 
 .charts-panel {
-  overflow: scroll !important;
+  overflow-y: scroll !important;
 }
 
 .charts-panel .panel-content {
