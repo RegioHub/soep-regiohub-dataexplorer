@@ -29,6 +29,9 @@ function(input, output, session) {
 
   map_year <- reactive(as.integer(input$year))
 
+  map_nuts_regions <- reactive(map_drill_obj$curr_nuts) |>
+    bindEvent(input$drill_down, input$drill_up)
+
   chart_data <- reactive({
     if (map_level() == 1) {
       data_wide_nuts1
@@ -198,4 +201,17 @@ function(input, output, session) {
 
     paste0(curr_metadata$title, " (", curr_metadata$subtitle, ")")
   })
+
+  ## Stable diffusion pics ---
+
+  output$sd_pic <- renderUI({
+    regions <- map_nuts_regions()
+    nuts <- regions[regions$id == input$map_drill_shape_mouseover$id, ]$nuts
+
+    img(
+      src = paste0("sd-pics/", nuts, ".jpeg"),
+      style = "max-width:100%;max-height:100%;"
+    )
+  }) |>
+    bindEvent(input$map_drill_shape_mouseover)
 }
