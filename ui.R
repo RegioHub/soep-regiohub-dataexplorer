@@ -81,9 +81,7 @@ grid_page(
       inputId = "unselect",
       label = "Auswahl aufheben",
       width = "100%"
-    ),
-    hr(),
-    uiOutput("sd_pic")
+    )
   ),
   grid_card(
     area = "map",

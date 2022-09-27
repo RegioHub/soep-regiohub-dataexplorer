@@ -43,15 +43,12 @@ Leafdown2 <- R6::R6Class("Leafdown2",
     }
   ),
   active = list(
-    # Expose NUTS names of current shapes
-    curr_nuts = function(value) { #<<
+    # Expose leaflet shiny proxy
+    map_proxy = function(value) { #<<
       if (missing(value)) {
-        out <- private$.curr_data
-        names(out)[2] <- "nuts"
-        out$id <- private$.curr_poly_ids
-        out[, c("id", "nuts")]
+        private$.map_proxy
       } else {
-        stop("`$curr_nuts` is read only", call. = FALSE)
+        stop("`$map_proxy` is read only", call. = FALSE)
       }
     }
   ),
