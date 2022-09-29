@@ -59,6 +59,7 @@ lineChartServer <- function(id, data, leaflet_map) {
           ) |>
           echarts4r::e_legend(FALSE) |>
           echarts4r::e_legend_select("(Durchschnitt)") |>
+          echarts4r::e_datazoom(toolbox = FALSE, show = FALSE) |>
           echarts4r::e_text_style(
             fontFamily = "Roboto, sans-serif"
           )

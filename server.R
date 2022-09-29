@@ -164,6 +164,20 @@ function(input, output, session) {
     )
   )
 
+  ### Year range ----
+
+  observe({
+    lapply(var_names, \(x) {
+      echarts4rProxy(paste0(x, "-chart")) |>
+        e_dispatch_action_p(
+          "dataZoom",
+          startValue = input$charts_years[1],
+          endValue = input$charts_years[2]
+        )
+    })
+  }) |>
+    bindEvent(input$charts_years)
+
   ### Update legend ----
 
   observe({
@@ -191,7 +205,7 @@ function(input, output, session) {
   }) |>
     bindEvent(input$map_var)
 
-  ## Information, descriptions etc. ---
+  ## Information, descriptions etc. ----
 
   output$map_var_info <- renderText({
     curr_metadata <- metadata[metadata$id == input$map_var, ]

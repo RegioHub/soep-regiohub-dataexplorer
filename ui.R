@@ -19,12 +19,14 @@ grid_page(
     "header          header header                  header_right           ",
     "controller_left map    charts_legend_container charts_toggle_container",
     "controller_left map    charts_area             charts_area            ",
+    "controller_left map    charts_footer           charts_footer          ",
     "footer          footer footer                  footer                 "
   ),
   row_sizes = c(
     "60px",
     "60px",
     "1fr",
+    "60px",
     "30px"
   ),
   col_sizes = c(
@@ -99,7 +101,7 @@ grid_page(
   ),
   grid_card(
     area = "charts_legend_container",
-    item_gap = "12px",
+    item_gap = "0",
     class = "echarts-legend-container",
     div(
       id = "echarts-legend",
@@ -108,7 +110,7 @@ grid_page(
   ),
   grid_card(
     area = "charts_toggle_container",
-    item_gap = "12px",
+    item_gap = "0",
     class = "echarts-toggle-container",
     checkboxInput(
       inputId = "chart_show_avg",
@@ -119,7 +121,7 @@ grid_page(
   ),
   grid_card(
     area = "charts_area",
-    item_gap = "12px",
+    item_gap = "0",
     class = "charts-panel",
     grid_container(
       flag_mismatches = FALSE,
@@ -149,6 +151,16 @@ grid_page(
           lineChartUI(var_names[[x]], metadata)
         )
       })
+    )
+  ),
+  grid_card(
+    area = "charts_footer",
+    shinyWidgets::sliderTextInput(
+      inputId = "charts_years",
+      label = NULL,
+      choices = as.character(1984:2021),
+      selected = c("1984", "2021"),
+      width = "50%"
     )
   ),
   grid_card_text(
