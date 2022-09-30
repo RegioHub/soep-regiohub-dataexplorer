@@ -36,6 +36,7 @@ grid_page(
     "180px"
   ),
   gap_size = "15px",
+  tags$head(tags$base(target = "blank_")),
   use_prompt(),
   useShinyjs(),
   tags$script(src = "misc.js"),
