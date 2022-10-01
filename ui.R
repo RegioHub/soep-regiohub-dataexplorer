@@ -1,15 +1,3 @@
-grid_card_title <- grid_card_text(
-  area = "header",
-  content = "SOEP-RegioHub DataExplorer",
-  h_align = "start",
-  alignment = "start",
-  icon = "lwc-logo.svg",
-  wrapping_tag = "h3",
-  is_title = TRUE
-)
-
-grid_card_title$attribs$class <- paste(grid_card_title$attribs$class, "title-container")
-
 grid_page(
   theme = bs_add_rules(
     bs_theme(version = 5),
@@ -36,16 +24,28 @@ grid_page(
     "180px"
   ),
   gap_size = "15px",
-  tags$head(tags$base(target = "blank_")),
+  tags$head(
+    tags$title("SOEP-RegioHub DataExplorer"),
+    tags$base(target = "blank_")
+  ),
   use_prompt(),
   useShinyjs(),
   tags$script(src = "misc.js"),
-  grid_card_title,
+  grid_card_text(
+    area = "header",
+    content = span(
+      class = "app-title",
+      HTML("<a href='https://lsc-soep-regiohub.com/'><img alt='Leibniz ScienceCampus SOEP RegioHub logo' src='lwc-logo.svg' height=55px></a>"),
+      "SOEP-RegioHub DataExplorer"
+    ),
+    h_align = "start",
+    alignment = "start",
+    wrapping_tag = "h3"
+  ),
   grid_card_text(
     area = "header_right",
-    content = "",
-    alignment = "end",
-    icon = "dgs-kongress-logo.svg"
+    content = HTML("<a href='https://kongress2022.soziologie.de/'><img alt='DGS Kongress 2022 logo' src='dgs-kongress-logo.svg' height=55px></a>"),
+    alignment = "end"
   ),
   grid_card(
     area = "controller_left",

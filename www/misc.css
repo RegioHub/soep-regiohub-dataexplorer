@@ -8,11 +8,11 @@ body {
   border: 0;
 }
 
-.title-container img {
+.app-title img {
   margin-right: 12px;
 }
 
-.title-container h3::after {
+.app-title::after {
   content: '0.1.0';
   font-size: 75%;
   font-weight: 400;
@@ -127,4 +127,10 @@ body {
 [class*="hint--"][aria-label]::after {
   font: 14px / 21px Roboto, sans-serif;
   white-space: pre-wrap;
+}
+
+.fa-arrow-up-right-from-square {
+  font-size: 75%;
+  vertical-align: super;
+  margin-left: 2px;
 }
