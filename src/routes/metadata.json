@@ -1,0 +1,49 @@
+{
+	"hospital_beds": {
+		"title": "Krankenhausbetten",
+		"subtitle": "Betten je 1000 Einwohner:innen",
+		"note": "Krankenhausadressen mit OpenStreetMap/Nominatim geokodiert, harmonisiert über Zeit",
+		"source": "destatis"
+	},
+	"pop_density": {
+		"title": "Bevölkerungsdichte",
+		"subtitle": "Einwohner:innen je km²",
+		"source": "Zensuskorrigierte Bevölkerungszahlen: INKAR; Flächen: Eurostat GISCO"
+	},
+	"bmi": {
+		"title": "Body-Mass-Index (BMI)",
+		"subtitle": "Gewicht [kg] / Größe [m]²",
+		"source": "SOEP"
+	},
+	"satisfaction_health": {
+		"title": "Zufriedenheit mit eigener Gesundheit",
+		"subtitle": "0: niedrig – 10: hoch",
+		"source": "SOEP"
+	},
+	"worries_finances": {
+		"title": "Sorgen um eigene wirtschaftliche Situation",
+		"subtitle": "1: große Sorgen – 3: keine Sorgen",
+		"source": "SOEP"
+	},
+	"satisfaction_life": {
+		"title": "Lebenszufriedenheit",
+		"subtitle": "0: niedrig – 10: hoch",
+		"source": "SOEP"
+	},
+	"turnout": {
+		"title": "Wahlbeteiligung",
+		"subtitle": "% Zweitstimmen an Wahlberechtigten",
+		"source": "INKAR"
+	},
+	"trust": {
+		"title": "Vertrauen",
+		"subtitle": "1: niedrig – 4: hoch",
+		"note": "Mittelwertindex aus drei Items: (1) \"Allgemeines Vertrauen\", (2) \"Verlass auf niemanden\" (invertiert) und (3) \"Vorsicht gegenüber Fremden\" (invertiert)",
+		"source": "SOEP"
+	},
+	"soziologie": {
+		"title": "Twitter-Soziologie-Index",
+		"subtitle": "Anzahl Tweets mit \"soziolog\"",
+		"source": "Twitter"
+	}
+}
