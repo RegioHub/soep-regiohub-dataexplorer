@@ -11,7 +11,6 @@
 		rangeExt,
 		unique,
 		whichMin,
-		type EChartSelectChangedEvent,
 		type TargetedEvent,
 	} from "./utils";
 
@@ -68,17 +67,14 @@
 				: [whichMin(mapYears.map((y) => Math.abs(y - mapYear)))];
 	}
 
-	function unselectAllMapRegions(): void {
+	let selectedRegions: string[] = [];
+
+	function unselectAllRegions(): void {
 		mapInstance.dispatchAction({
 			type: "unselect",
-			dataIndex: [...Array(mapData.length).keys()],
+			name: selectedRegions,
 		});
 	}
-
-	let selectedRegions: number[] = [];
-	$: mapInstance?.on("selectchanged", (event) => {
-		selectedRegions = (event as EChartSelectChangedEvent).selected[0].dataIndex;
-	});
 </script>
 
 <svelte:head>
@@ -121,6 +117,7 @@
 						range={mapRange}
 						{...metadata[mapVar]}
 						bind:mapInstance
+						bind:selectedRegions
 					/>
 
 					<div class="mb-4 mt-8 w-80 sm:w-96">
@@ -182,7 +179,7 @@
 							<label
 								class="btn-ghost btn w-1/2"
 								class:btn-disabled={level === l}
-								on:click={unselectAllMapRegions}
+								on:click={unselectAllRegions}
 							>
 								{levelLabels[l]}
 								<input
@@ -200,7 +197,7 @@
 
 					<button
 						class="btn-ghost btn-sm btn w-full normal-case"
-						on:click={unselectAllMapRegions}
+						on:click={unselectAllRegions}
 					>
 						Auswahl aufheben
 					</button>
@@ -212,7 +209,7 @@
 	<div class="drawer-side">
 		<label for="chart-pane" class="drawer-overlay" />
 		<div class="menu w-11/12 bg-base-100 p-4 lg:w-[calc((100vw-18rem)*9/16)]">
-			{selectedRegions.map((idx) => mapData[idx].name)}
+			{selectedRegions}
 		</div>
 	</div>
 </div>

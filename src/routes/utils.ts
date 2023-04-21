@@ -4,13 +4,15 @@ export type Stringable = {
 
 export type TargetedEvent<T> = Event & { currentTarget: EventTarget & T };
 
-export type EChartSelectChangedEvent = {
+export type EChartSelectchangedEvent = {
 	type: "selectchanged";
 	fromAction: "select" | "toggleSelect" | "unselect";
-	selected: {
-		dataIndex: number[];
-		seriesIndex: number;
-	}[];
+	selected:
+		| []
+		| {
+				dataIndex: number[];
+				seriesIndex: number;
+		  }[];
 };
 
 export function pseudoLog1p(x: number): number {

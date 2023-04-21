@@ -1,33 +1,35 @@
 <!-- Adapted from https://github.com/bherbruck/svelte-echarts -->
 
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
+	import type { Action } from "svelte/types/runtime/action";
 	import { init, type EChartsOption, type EChartsType } from "echarts";
+	import type { EChartSelectchangedEvent } from "./utils";
 
-	export let instance: EChartsType | undefined = undefined;
+	export let instance: EChartsType;
 	export let option: EChartsOption;
 
-	export function chart(
-		node: HTMLElement,
-		option: EChartsOption
-	): { destroy(): void; update(newOption: EChartsOption): void } {
-		instance = init(node);
-		instance.setOption(option);
+	const dispatch = createEventDispatcher();
 
-		function handleResize(): void {
-			instance?.resize();
-		}
-		window.addEventListener("resize", handleResize);
+	const chart: Action<HTMLDivElement, EChartsOption> = (node, option) => {
+		instance = init(node);
+		instance.setOption(option!);
+
+		instance.on("selectchanged", (event) => {
+			dispatch("selectchanged", (event as EChartSelectchangedEvent).selected);
+		});
 
 		return {
-			destroy() {
-				instance?.dispose();
-				window.removeEventListener("resize", handleResize);
+			destroy(): void {
+				instance.dispose();
 			},
-			update(newOption: EChartsOption) {
-				instance?.setOption({ ...option, ...newOption });
+			update(newOption: EChartsOption): void {
+				instance.setOption({ ...option, ...newOption });
 			},
 		};
-	}
+	};
 </script>
+
+<svelte:window on:resize={() => instance.resize()} />
 
 <div class="h-full w-full" use:chart={option} />

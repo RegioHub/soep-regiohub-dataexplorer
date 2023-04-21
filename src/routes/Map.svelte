@@ -1,22 +1,35 @@
 <script lang="ts">
 	import { Icon } from "svelte-awesome";
-	import { registerMap, type EChartsOption, type EChartsType } from "echarts";
+	import {
+		registerMap,
+		type EChartsOption,
+		type EChartsType,
+		type SeriesOption,
+	} from "echarts";
 	import EChart from "./EChart.svelte";
 	import { geoMercator } from "d3-geo";
-	import { objMap, pseudoLog1p } from "./utils";
+	import {
+		objMap,
+		pseudoLog1p,
+		unique,
+		type EChartSelectchangedEvent,
+	} from "./utils";
 
 	import searchPlus from "svelte-awesome/icons/searchPlus";
 	import searchMinus from "svelte-awesome/icons/searchMinus";
 	import { mapGeo } from "./geodata";
 	import nuts1Boundaries from "./assets/nuts1-boundaries.json";
 
-	export let mapInstance: EChartsType | undefined = undefined;
+	type MapSeriesData = { name: string; value: number }[];
+
+	export let mapInstance: EChartsType;
 	export let level: "nuts1" | "nuts3";
-	export let data: { name: string; value: number }[];
+	export let data: MapSeriesData;
 	export let log = false;
 	export let range: { min: number; max: number };
 	export let title: string;
 	export let subtitle: string;
+	export let selectedRegions: string[];
 
 	Object.values(mapGeo).forEach((geoJson) =>
 		registerMap(geoJson.name, geoJson)
@@ -31,7 +44,7 @@
 	let isZoomable = false;
 
 	function resetZoom(): void {
-		mapInstance?.setOption({ geo: { center: mapCenter, zoom: 1 } });
+		mapInstance.setOption({ geo: { center: mapCenter, zoom: 1 } });
 	}
 
 	function valueFormatter(value: number): string {
@@ -70,6 +83,13 @@
 		],
 	};
 
+	function completeMapSeriesData(data: MapSeriesData): MapSeriesData {
+		const filler = mapGeo[level].features
+			.map((feat) => feat.properties)
+			.map(({ name }) => ({ name, value: NaN }));
+		return [...data, ...filler];
+	}
+
 	$: option = {
 		tooltip: {
 			trigger: "item",
@@ -100,7 +120,7 @@
 			center: mapCenter,
 			itemStyle: {
 				areaColor: "#e5e6e6",
-				borderColor: "#f2f2f2",
+				borderColor: "#e5e6e6",
 				borderWidth: 1,
 			},
 			emphasis: {
@@ -131,8 +151,13 @@
 				name: title,
 				selectedMode: "multiple",
 				data: log
-					? data.map(({ name, value }) => ({ name, value: pseudoLog1p(value) }))
-					: data,
+					? completeMapSeriesData(
+							data.map(({ name, value }) => ({
+								name,
+								value: pseudoLog1p(value),
+							}))
+					  )
+					: completeMapSeriesData(data),
 				tooltip: {
 					valueFormatter,
 				},
@@ -157,13 +182,40 @@
 		],
 		animation: false,
 	} as EChartsOption;
+
+	function handleSelectChange({
+		detail: selectedDataIdx,
+	}: {
+		detail: EChartSelectchangedEvent["selected"];
+	}) {
+		if (selectedDataIdx.length === 0) {
+			selectedRegions = [];
+		} else {
+			const seriesData = (
+				(mapInstance.getOption() as EChartsOption).series as SeriesOption[]
+			)[0].data as { name: string; value: number }[];
+
+			const selectedNames = selectedDataIdx[0].dataIndex.map(
+				(idx) => seriesData[idx].name
+			);
+
+			selectedRegions =
+				selectedNames.length < selectedRegions.length
+					? selectedRegions.filter((name) => selectedNames.includes(name))
+					: unique([...selectedRegions, ...selectedNames]);
+		}
+	}
 </script>
 
 <h1 class="mt-4 text-lg font-bold">{title}</h1>
 
 <div class="text-sm">{subtitle}</div>
 
-<EChart {option} bind:instance={mapInstance} />
+<EChart
+	{option}
+	bind:instance={mapInstance}
+	on:selectchanged={handleSelectChange}
+/>
 
 <div class="inline-flex items-center">
 	<span class="form-control">
