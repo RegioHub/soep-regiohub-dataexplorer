@@ -2,6 +2,7 @@
 	import { Icon } from "svelte-awesome";
 	import type { EChartsOption, EChartsType } from "echarts";
 	import EChart from "./EChart.svelte";
+	import { dynamicPalette } from "./utils";
 
 	import infoCircle from "svelte-awesome/icons/infoCircle";
 
@@ -41,7 +42,7 @@
 			type: "line",
 			seriesLayoutBy: "row",
 		})),
-		color: ["#d2d4d7", "#db9d85", "#9db469", "#3dbeab", "#87aedf", "#da95cc"],
+		color: ["#d2d4d7", ...dynamicPalette],
 		animationDuration: 400,
 	} as EChartsOption;
 

@@ -7,6 +7,7 @@
 	import Map from "./Map.svelte";
 	import DiscreteSlider from "./DiscreteSlider.svelte";
 	import {
+		dynamicPalette,
 		objMap,
 		rangeExt,
 		toEChartDatasetRows,
@@ -99,7 +100,7 @@
 	<title>SOEP RegioHub Data Explorer</title>
 </svelte:head>
 
-<div class="drawer drawer-mobile drawer-end">
+<div class="drawer-mobile drawer drawer-end">
 	<input id="chart-pane" type="checkbox" class="drawer-toggle" />
 
 	<div class="drawer-content flex flex-col">
@@ -127,7 +128,7 @@
 					</label>
 				</span>
 
-				<div class="flex h-full flex-col items-center py-4">
+				<div class="flex h-full flex-col items-center overflow-hidden py-4">
 					<Map
 						{level}
 						data={mapData}
@@ -224,15 +225,27 @@
 	<div class="drawer-side">
 		<label for="chart-pane" class="drawer-overlay" />
 
-		<div class="menu w-11/12 bg-base-100 p-4 lg:w-[calc((100vw-18rem)*9/16)]">
-			<div class="mb-4 flex items-center">
-				<div class="w-[calc(100%-192px)]">Legend container</div>
+		<div class="menu w-11/12 px-4 py-0 lg:w-[calc((100vw-18rem)*9/16)]">
+			<div class="sticky top-0 z-50 flex h-24 items-center bg-base-100 py-4">
+				<div class="w-[calc(100%-192px)]">
+					{#each selectedRegions.map( (v, i) => [v, dynamicPalette[i]] ) as [legendKey, legendColour]}
+						<span class="mr-2">
+							<span class="whitespace-nowrap">
+								<span
+									class="inline-block h-3 w-3 rounded-full"
+									style={`background-color: ${legendColour};`}
+								/>
+								{legendKey}
+							</span>
+						</span>
+					{/each}
+				</div>
 
-				<div class="form-control w-48">
+				<div class="form-control w-44">
 					<label class="label cursor-pointer">
 						<input
 							type="checkbox"
-							class="toggle toggle-sm"
+							class="toggle toggle-sm mr-2"
 							bind:checked={lineChartsShowAvg}
 						/>
 						<span class="label-text">Bundesdurchschnitt</span>
@@ -240,7 +253,7 @@
 				</div>
 			</div>
 
-			<div class="grid gap-0 overflow-y-scroll md:grid-cols-2">
+			<div class="grid gap-0 md:grid-cols-2">
 				{#each vars as yVar}
 					<div class="h-72">
 						<LineChart

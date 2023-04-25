@@ -25,6 +25,14 @@ export type EChartSelectchangedEvent = {
 		  }[];
 };
 
+export const dynamicPalette = [
+	"#db9d85",
+	"#9db469",
+	"#3dbeab",
+	"#87aedf",
+	"#da95cc",
+];
+
 export function pseudoLog1p(x: number): number {
 	return x >= 0 ? Math.log1p(x) : -Math.log1p(-x);
 }
