@@ -8,6 +8,7 @@
 
 	export let instance: EChartsType;
 	export let option: EChartsOption;
+	export let replaceMerge: ("xAxis" | "yAxis" | "series")[] = [];
 
 	const dispatch = createEventDispatcher();
 
@@ -16,7 +17,11 @@
 		instance.setOption(option!);
 
 		instance.on("selectchanged", (event) => {
-			dispatch("selectchanged", (event as EChartSelectchangedEvent).selected);
+			const { selected, fromActionPayload } = event as EChartSelectchangedEvent;
+			dispatch(
+				"selectchanged",
+				selected.length === 0 ? { type: "unselectAll" } : fromActionPayload
+			);
 		});
 
 		return {
@@ -24,7 +29,7 @@
 				instance.dispose();
 			},
 			update(newOption: EChartsOption): void {
-				instance.setOption({ ...option, ...newOption });
+				instance.setOption({ ...option, ...newOption }, { replaceMerge });
 			},
 		};
 	};

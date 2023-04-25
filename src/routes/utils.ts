@@ -1,3 +1,5 @@
+import type ColumnTable from "arquero/dist/types/table/column-table";
+
 export type Stringable = {
 	toString(): string;
 };
@@ -6,12 +8,20 @@ export type TargetedEvent<T> = Event & { currentTarget: EventTarget & T };
 
 export type EChartSelectchangedEvent = {
 	type: "selectchanged";
-	fromAction: "select" | "toggleSelect" | "unselect";
+	fromAction: "select" | "unselect";
+	fromActionPayload: {
+		type: "select" | "unselect";
+		isFromClick?: boolean;
+		seriesIndex?: number;
+		dataIndexInside?: number;
+		name?: string;
+	};
+	isFromClick: boolean;
 	selected:
 		| []
 		| {
-				dataIndex: number[];
 				seriesIndex: number;
+				dataIndex: number[];
 		  }[];
 };
 
@@ -52,11 +62,18 @@ export function whichMin(arr: number[]): number {
 	return minIndex;
 }
 
-export function objMap<T, U>(
-	obj: { [k: string]: T },
-	callbackfn: Function
-): { [k: string]: U } {
+export function objMap<K extends string, T, U>(
+	obj: Record<K, T>,
+	callbackfn: (value: T, key: K) => U
+): Record<K, U> {
 	return Object.fromEntries(
-		Object.entries(obj).map(([k, v]) => [k, callbackfn(v)])
-	);
+		(Object.entries(obj) as [K, T][]).map(([k, v]) => [k, callbackfn(v, k)])
+	) as Record<K, U>;
+}
+
+export function toEChartDatasetRows(tbl: ColumnTable): (string | number)[][] {
+	return Object.entries(tbl.data()).map(([name, value]) => [
+		name,
+		...value.data,
+	]);
 }

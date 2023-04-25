@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { Icon } from "svelte-awesome";
 	import { escape as aqEscape, table as aqTable } from "arquero";
-	import type ColumnTable from "arquero/dist/types/table/column-table";
 	import type { Struct } from "arquero/dist/types/op/op-api";
 	import type { EChartsType } from "echarts";
+	import LineChart from "./LineChart.svelte";
 	import Map from "./Map.svelte";
 	import DiscreteSlider from "./DiscreteSlider.svelte";
 	import {
 		objMap,
 		rangeExt,
+		toEChartDatasetRows,
 		unique,
 		whichMin,
 		type TargetedEvent,
@@ -19,6 +20,8 @@
 	import logo from "./assets/logo.svg";
 	import metadata from "./metadata.json";
 	import dataObj from "./assets/data.json";
+	import avgData from "./assets/data-avg.json";
+	import { regionNames } from "./geodata";
 
 	const vars = Object.keys(metadata) as (keyof typeof metadata)[];
 
@@ -29,11 +32,24 @@
 	};
 	let level: (typeof levels)[number] = levels[1];
 
-	type DataCols = { name: string[]; year: number[]; value: number[] };
-	const dataTbls: { [level: string]: { [x: string]: ColumnTable } } = objMap(
-		dataObj,
-		(level: { [x: string]: DataCols }) =>
-			objMap(level, (data: DataCols) => aqTable(data))
+	const dataTbls = objMap(dataObj, (levelData) =>
+		objMap(levelData, (data) => aqTable(data))
+	);
+
+	const dataTblsWide = objMap(dataTbls, (levelData, level) =>
+		objMap(levelData, (tbl) => {
+			const tblWide = tbl.groupby("year").pivot("name", "value");
+			const nonMissingRegions = tblWide
+				.columnNames()
+				.filter((name) => name !== "year");
+			const fillerValues = Array.from({ length: tblWide.numRows() }, () => NaN);
+			const fillerCols = Object.fromEntries(
+				regionNames[level]
+					.filter((name) => !nonMissingRegions.includes(name))
+					.map((name) => [name, fillerValues])
+			);
+			return aqTable({ ...tblWide.columns(), ...fillerCols });
+		})
 	);
 
 	let mapInstance: EChartsType;
@@ -75,13 +91,15 @@
 			name: selectedRegions,
 		});
 	}
+
+	let lineChartsShowAvg = true;
 </script>
 
 <svelte:head>
 	<title>SOEP RegioHub Data Explorer</title>
 </svelte:head>
 
-<div class="drawer-mobile drawer drawer-end">
+<div class="drawer drawer-mobile drawer-end">
 	<input id="chart-pane" type="checkbox" class="drawer-toggle" />
 
 	<div class="drawer-content flex flex-col">
@@ -116,7 +134,7 @@
 						log={mapLogScale}
 						range={mapRange}
 						{...metadata[mapVar]}
-						bind:mapInstance
+						bind:instance={mapInstance}
 						bind:selectedRegions
 					/>
 
@@ -159,10 +177,7 @@
 						</label>
 					</div>
 
-					<div
-						class="form-control mb-4"
-						class:invisible={mapVar !== "hospital_beds"}
-					>
+					<div class="form-control mb-4" class:invisible={true}>
 						<label class="label cursor-pointer justify-start">
 							<input
 								type="checkbox"
@@ -208,8 +223,39 @@
 
 	<div class="drawer-side">
 		<label for="chart-pane" class="drawer-overlay" />
+
 		<div class="menu w-11/12 bg-base-100 p-4 lg:w-[calc((100vw-18rem)*9/16)]">
-			{selectedRegions}
+			<div class="mb-4 flex items-center">
+				<div class="w-[calc(100%-192px)]">Legend container</div>
+
+				<div class="form-control w-48">
+					<label class="label cursor-pointer">
+						<input
+							type="checkbox"
+							class="toggle toggle-sm"
+							bind:checked={lineChartsShowAvg}
+						/>
+						<span class="label-text">Bundesdurchschnitt</span>
+					</label>
+				</div>
+			</div>
+
+			<div class="grid gap-0 overflow-y-scroll md:grid-cols-2">
+				{#each vars as yVar}
+					<div class="h-72">
+						<LineChart
+							data={[
+								...avgData[level][yVar],
+								...toEChartDatasetRows(
+									dataTblsWide[level][yVar].select(selectedRegions)
+								),
+							]}
+							showAvg={lineChartsShowAvg}
+							{...metadata[yVar]}
+						/>
+					</div>
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>

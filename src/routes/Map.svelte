@@ -8,21 +8,16 @@
 	} from "echarts";
 	import EChart from "./EChart.svelte";
 	import { geoMercator } from "d3-geo";
-	import {
-		objMap,
-		pseudoLog1p,
-		unique,
-		type EChartSelectchangedEvent,
-	} from "./utils";
+	import { objMap, pseudoLog1p, type EChartSelectchangedEvent } from "./utils";
 
 	import searchPlus from "svelte-awesome/icons/searchPlus";
 	import searchMinus from "svelte-awesome/icons/searchMinus";
-	import { mapGeo } from "./geodata";
+	import { mapGeo, regionNames } from "./geodata";
 	import nuts1Boundaries from "./assets/nuts1-boundaries.json";
 
 	type MapSeriesData = { name: string; value: number }[];
 
-	export let mapInstance: EChartsType;
+	export let instance: EChartsType;
 	export let level: "nuts1" | "nuts3";
 	export let data: MapSeriesData;
 	export let log = false;
@@ -44,7 +39,7 @@
 	let isZoomable = false;
 
 	function resetZoom(): void {
-		mapInstance.setOption({ geo: { center: mapCenter, zoom: 1 } });
+		instance.setOption({ geo: { center: mapCenter, zoom: 1 } });
 	}
 
 	function valueFormatter(value: number): string {
@@ -84,9 +79,7 @@
 	};
 
 	function completeMapSeriesData(data: MapSeriesData): MapSeriesData {
-		const filler = mapGeo[level].features
-			.map((feat) => feat.properties)
-			.map(({ name }) => ({ name, value: NaN }));
+		const filler = regionNames[level].map((name) => ({ name, value: NaN }));
 		return [...data, ...filler];
 	}
 
@@ -171,7 +164,7 @@
 					width: 1,
 					shadowBlur: 2,
 					shadowColor: "#1f2937",
-					opacity: level === "nuts1" ? 0 : 1,
+					opacity: 1,
 				},
 				data: nuts1Boundaries,
 				animation: false,
@@ -184,25 +177,39 @@
 	} as EChartsOption;
 
 	function handleSelectChange({
-		detail: selectedDataIdx,
+		detail: action,
 	}: {
-		detail: EChartSelectchangedEvent["selected"];
+		detail:
+			| EChartSelectchangedEvent["fromActionPayload"]
+			| { type: "unselectAll" };
 	}) {
-		if (selectedDataIdx.length === 0) {
+		if (action.type === "unselectAll") {
 			selectedRegions = [];
 		} else {
+			const { type, seriesIndex, dataIndexInside, name } = action;
+			if (seriesIndex !== undefined && seriesIndex !== 0) return;
+
 			const seriesData = (
-				(mapInstance.getOption() as EChartsOption).series as SeriesOption[]
+				(instance.getOption() as EChartsOption).series as SeriesOption[]
 			)[0].data as { name: string; value: number }[];
 
-			const selectedNames = selectedDataIdx[0].dataIndex.map(
-				(idx) => seriesData[idx].name
-			);
+			const affectedRegion = name ?? seriesData[dataIndexInside!].name;
 
-			selectedRegions =
-				selectedNames.length < selectedRegions.length
-					? selectedRegions.filter((name) => selectedNames.includes(name))
-					: unique([...selectedRegions, ...selectedNames]);
+			if (type === "select") {
+				if (selectedRegions.length === 5) {
+					instance.dispatchAction({
+						type: "unselect",
+						name: affectedRegion,
+					});
+					alert("Maximal fünf Regionen können ausgewählt werden.");
+				} else {
+					selectedRegions = [...selectedRegions, affectedRegion];
+				}
+			} else {
+				selectedRegions = selectedRegions.filter(
+					(region) => region !== affectedRegion
+				);
+			}
 		}
 	}
 </script>
@@ -211,11 +218,7 @@
 
 <div class="text-sm">{subtitle}</div>
 
-<EChart
-	{option}
-	bind:instance={mapInstance}
-	on:selectchanged={handleSelectChange}
-/>
+<EChart {option} bind:instance on:selectchanged={handleSelectChange} />
 
 <div class="inline-flex items-center">
 	<span class="form-control">
