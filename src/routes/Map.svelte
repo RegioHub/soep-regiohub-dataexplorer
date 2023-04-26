@@ -86,7 +86,6 @@
 	$: option = {
 		tooltip: {
 			trigger: "item",
-			appendToBody: true,
 			transitionDuration: 0.2,
 		},
 		visualMap: {

@@ -34,7 +34,6 @@
 		yAxis: { scale: true },
 		tooltip: {
 			trigger: "axis",
-			appendToBody: true,
 			order: "valueDesc",
 		},
 		dataset: { source: data },
