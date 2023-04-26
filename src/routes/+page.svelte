@@ -104,9 +104,7 @@
 	<title>SOEP RegioHub Data Explorer</title>
 </svelte:head>
 
-<div
-	class="drawer-mobile drawer drawer-end h-[calc(100vh-52px)] overflow-hidden"
->
+<div class="drawer-mobile drawer drawer-end overflow-hidden">
 	<input id="chart-pane" type="checkbox" class="drawer-toggle" />
 
 	<div class="drawer-content flex flex-col">
@@ -223,6 +221,35 @@
 					>
 						Auswahl aufheben
 					</button>
+
+					<footer
+						class="footer absolute bottom-4 left-4 w-72 bg-base-100 text-base-content lg:w-64"
+					>
+						<div>
+							<p>
+								Entwickelt von <a
+									class="link"
+									target="_blank"
+									rel="noreferrer"
+									href="https://lo-ng.netlify.app/">Long Nguyen</a
+								>, LeibnizWissenschaftsCampus SOEP RegioHub, Universität
+								Bielefeld (<a
+									class="link"
+									target="_blank"
+									rel="noreferrer"
+									href="https://github.com/RegioHub/soep-regiohub-dataexplorer/"
+									>Quellcode</a
+								>). Veröffentlicht unter der Lizenz
+								<a
+									class="link"
+									target="_blank"
+									rel="noreferrer"
+									href="https://creativecommons.org/licenses/by/4.0/legalcode"
+									>CC-by 4.0</a
+								>.
+							</p>
+						</div>
+					</footer>
 				</div>
 			</div>
 		</div>
@@ -231,7 +258,9 @@
 	<div class="drawer-side">
 		<label for="chart-pane" class="drawer-overlay" />
 
-		<div class="menu w-11/12 px-4 py-0 lg:w-[calc((100vw-18rem)*9/16)]">
+		<div
+			class="menu w-11/12 bg-base-100 px-4 py-0 lg:w-[calc((100vw-18rem)*9/16)]"
+		>
 			<div class="sticky top-0 z-50 flex h-24 items-center bg-base-100 py-4">
 				<div class="w-[calc(100%-192px)]">
 					{#each selectedRegions.map( (v, i) => [v, dynamicPalette[i]] ) as [legendKey, legendColour]}
@@ -239,7 +268,7 @@
 							<span class="whitespace-nowrap">
 								<span
 									class="inline-block h-3 w-3 rounded-full"
-									style={`background-color: ${legendColour};`}
+									style="background-color: {legendColour};"
 								/>
 								{legendKey}
 							</span>
@@ -277,29 +306,3 @@
 		</div>
 	</div>
 </div>
-
-<footer class="footer h-[52px] bg-base-200 p-4 text-base-content">
-	<div>
-		<p>
-			Entwickelt von <a
-				class="link"
-				target="_blank"
-				rel="noreferrer"
-				href="https://lo-ng.netlify.app/">Long Nguyen</a
-			>, LeibnizWissenschaftsCampus SOEP RegioHub, Universität Bielefeld (<a
-				class="link"
-				target="_blank"
-				rel="noreferrer"
-				href="https://github.com/long39ng/soep-regiohub-dataexplorer/"
-				>Quellcode</a
-			>). Veröffentlicht unter der Lizenz
-			<a
-				class="link"
-				target="_blank"
-				rel="noreferrer"
-				href="https://creativecommons.org/licenses/by/4.0/legalcode"
-				>CC-by 4.0</a
-			>.
-		</p>
-	</div>
-</footer>
