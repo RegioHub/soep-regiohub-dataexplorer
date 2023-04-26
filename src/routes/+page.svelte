@@ -82,6 +82,10 @@
 			newYearNth >= 0
 				? [newYearNth]
 				: [whichMin(mapYears.map((y) => Math.abs(y - mapYear)))];
+
+		document
+			.querySelector("#" + mapVar + "-linechart")
+			?.scrollIntoView({ behavior: "smooth" });
 	}
 
 	let selectedRegions: string[] = [];
@@ -100,7 +104,9 @@
 	<title>SOEP RegioHub Data Explorer</title>
 </svelte:head>
 
-<div class="drawer-mobile drawer drawer-end">
+<div
+	class="drawer-mobile drawer drawer-end h-[calc(100vh-52px)] overflow-hidden"
+>
 	<input id="chart-pane" type="checkbox" class="drawer-toggle" />
 
 	<div class="drawer-content flex flex-col">
@@ -111,7 +117,7 @@
 				<span class="flex h-16 items-center justify-between p-4 lg:hidden">
 					<label
 						for="sidebar"
-						class="btn-ghost drawer-button btn-square btn-sm btn mr-4"
+						class="btn-ghost drawer-button btn-sm btn-square btn mr-4"
 					>
 						<Icon data={sliders} label="Options" scale={1.2} />
 					</label>
@@ -122,7 +128,7 @@
 					/>
 					<label
 						for="chart-pane"
-						class="btn-ghost drawer-button btn-square btn-sm btn ml-4"
+						class="btn-ghost drawer-button btn-sm btn-square btn ml-4"
 					>
 						<Icon data={lineChart} label="Line charts" scale={1.2} />
 					</label>
@@ -255,25 +261,24 @@
 
 			<div class="grid gap-0 md:grid-cols-2">
 				{#each vars as yVar}
-					<div class="h-72">
-						<LineChart
-							data={[
-								...avgData[level][yVar],
-								...toEChartDatasetRows(
-									dataTblsWide[level][yVar].select(selectedRegions)
-								),
-							]}
-							showAvg={lineChartsShowAvg}
-							{...metadata[yVar]}
-						/>
-					</div>
+					<LineChart
+						id={yVar + "-linechart"}
+						data={[
+							...avgData[level][yVar],
+							...toEChartDatasetRows(
+								dataTblsWide[level][yVar].select(selectedRegions)
+							),
+						]}
+						showAvg={lineChartsShowAvg}
+						{...metadata[yVar]}
+					/>
 				{/each}
 			</div>
 		</div>
 	</div>
 </div>
 
-<footer class="footer footer-center bg-base-200 p-4 text-base-content">
+<footer class="footer h-[52px] bg-base-200 p-4 text-base-content">
 	<div>
 		<p>
 			Entwickelt von <a
