@@ -1,5 +1,7 @@
-# SOEP-RegioHub DataExplorer
+# SOEP RegioHub DataExplorer
 
-Shiny app to explore data at SOEP RegioHub
+👉🗺️📊 https://regiohub.github.io/soep-regiohub-dataexplorer/
 
-![Screenshot of the app interface](https://user-images.githubusercontent.com/25417022/193466480-d406a489-40fc-4331-a5cb-0c04179f902c.png)
+Web application for interactive exploration of data at SOEP RegioHub
+
+![Screenshot of the app interface](https://user-images.githubusercontent.com/25417022/234571134-0f4dc43d-5d8d-4218-92eb-2d12cd0a7c0c.png)
