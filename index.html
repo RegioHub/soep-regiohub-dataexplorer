@@ -5,17 +5,17 @@
 		<link rel="icon" href="./favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta http-equiv="content-security-policy" content="">
-		<link href="./_app/immutable/assets/_layout.31b5a80c.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/_layout.675aaf06.css" rel="stylesheet">
 		<link href="./_app/immutable/assets/_page.64ac01ed.css" rel="stylesheet">
-		<link rel="modulepreload" href="./_app/immutable/entry/start.f84a9734.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.4433d15b.js">
 		<link rel="modulepreload" href="./_app/immutable/chunks/index.875b9ded.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.f7ae1512.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.4e35e7ab.js">
 		<link rel="modulepreload" href="./_app/immutable/chunks/index.f06729ef.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/app.21f569ae.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/_layout.svelte.009d73b5.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.408e5ad1.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/_layout.svelte.4cab110b.js">
 		<link rel="modulepreload" href="./_app/immutable/entry/_layout.ts.984db11e.js">
 		<link rel="modulepreload" href="./_app/immutable/chunks/_layout.da46b06b.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/_page.svelte.4d4f8da9.js"><title>SOEP RegioHub Data Explorer</title><!-- HEAD_svelte-1to3qp1_START --><!-- HEAD_svelte-1to3qp1_END -->
+		<link rel="modulepreload" href="./_app/immutable/entry/_page.svelte.54adff88.js"><title>SOEP RegioHub Data Explorer</title><!-- HEAD_svelte-1to3qp1_START --><!-- HEAD_svelte-1to3qp1_END -->
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">
@@ -23,7 +23,7 @@
 
 
 
-<div class="drawer-mobile drawer drawer-end h-[calc(100vh-52px)] overflow-hidden"><input id="chart-pane" type="checkbox" class="drawer-toggle">
+<div class="drawer-mobile drawer drawer-end overflow-hidden"><input id="chart-pane" type="checkbox" class="drawer-toggle">
 
 	<div class="drawer-content flex flex-col"><div class="drawer-mobile drawer"><input id="sidebar" type="checkbox" class="drawer-toggle">
 
@@ -116,11 +116,16 @@
 					<div class="divider invisible"></div>
 
 					<button class="btn-ghost btn-sm btn w-full normal-case">Auswahl aufheben
-					</button></div></div></div></div>
+					</button>
+
+					<footer class="footer absolute bottom-4 left-4 w-72 bg-base-100 text-base-content lg:w-64"><div><p>Entwickelt von <a class="link" target="_blank" rel="noreferrer" href="https://lo-ng.netlify.app/">Long Nguyen</a>, LeibnizWissenschaftsCampus SOEP RegioHub, Universität
+								Bielefeld (<a class="link" target="_blank" rel="noreferrer" href="https://github.com/RegioHub/soep-regiohub-dataexplorer/">Quellcode</a>). Veröffentlicht unter der Lizenz
+								<a class="link" target="_blank" rel="noreferrer" href="https://creativecommons.org/licenses/by/4.0/legalcode">CC-by 4.0</a>.
+							</p></div></footer></div></div></div></div>
 
 	<div class="drawer-side"><label for="chart-pane" class="drawer-overlay"></label>
 
-		<div class="menu w-11/12 px-4 py-0 lg:w-[calc((100vw-18rem)*9/16)]"><div class="sticky top-0 z-50 flex h-24 items-center bg-base-100 py-4"><div class="w-[calc(100%-192px)]"></div>
+		<div class="menu w-11/12 bg-base-100 px-4 py-0 lg:w-[calc((100vw-18rem)*9/16)]"><div class="sticky top-0 z-50 flex h-24 items-center bg-base-100 py-4"><div class="w-[calc(100%-192px)]"></div>
 
 				<div class="form-control w-44"><label class="label cursor-pointer"><input type="checkbox" class="toggle toggle-sm mr-2" checked>
 						<span class="label-text">Bundesdurchschnitt</span></label></div></div>
@@ -244,15 +249,11 @@
 
 <div class="h-full w-full"></div></div></div></div></div></div>
 
-<footer class="footer h-[52px] bg-base-200 p-4 text-base-content"><div><p>Entwickelt von <a class="link" target="_blank" rel="noreferrer" href="https://lo-ng.netlify.app/">Long Nguyen</a>, LeibnizWissenschaftsCampus SOEP RegioHub, Universität Bielefeld (<a class="link" target="_blank" rel="noreferrer" href="https://github.com/long39ng/soep-regiohub-dataexplorer/">Quellcode</a>). Veröffentlicht unter der Lizenz
-			<a class="link" target="_blank" rel="noreferrer" href="https://creativecommons.org/licenses/by/4.0/legalcode">CC-by 4.0</a>.
-		</p></div></footer>
-
 
 			
 			<script>
 				{
-					__sveltekit_l1dti7 = {
+					__sveltekit_1e2dx4p = {
 						base: new URL(".", location).pathname.slice(0, -1),
 						env: {}
 					};
@@ -262,8 +263,8 @@
 					const data = [null,null];
 
 					Promise.all([
-						import("./_app/immutable/entry/start.f84a9734.js"),
-						import("./_app/immutable/entry/app.21f569ae.js")
+						import("./_app/immutable/entry/start.4433d15b.js"),
+						import("./_app/immutable/entry/app.408e5ad1.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 2],
