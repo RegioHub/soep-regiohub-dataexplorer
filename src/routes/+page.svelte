@@ -10,6 +10,7 @@
 		dynamicPalette,
 		objMap,
 		rangeExt,
+		sleep,
 		toEChartDatasetRows,
 		unique,
 		whichMin,
@@ -83,9 +84,19 @@
 				? [newYearNth]
 				: [whichMin(mapYears.map((y) => Math.abs(y - mapYear)))];
 
-		document
-			.querySelector("#" + mapVar + "-linechart")
-			?.scrollIntoView({ behavior: "smooth" });
+		if (window.matchMedia("(min-width: 1024px)").matches) {
+			const selectedLineChart: HTMLDivElement | null = document.querySelector(
+				"#" + mapVar + "-linechart"
+			);
+			if (selectedLineChart !== null) {
+				selectedLineChart.scrollIntoView({ behavior: "smooth" });
+				const origBg = selectedLineChart.style.backgroundColor;
+				selectedLineChart.style.backgroundColor = "#37cdbe33";
+				sleep(1000).then(() => {
+					selectedLineChart.style.backgroundColor = origBg;
+				});
+			}
+		}
 	}
 
 	let selectedRegions: string[] = [];
@@ -115,7 +126,7 @@
 				<span class="flex h-16 items-center justify-between p-4 lg:hidden">
 					<label
 						for="sidebar"
-						class="btn-ghost drawer-button btn-sm btn-square btn mr-4"
+						class="btn-ghost drawer-button btn-square btn-sm btn mr-4"
 					>
 						<Icon data={sliders} label="Options" scale={1.2} />
 					</label>
@@ -126,7 +137,7 @@
 					/>
 					<label
 						for="chart-pane"
-						class="btn-ghost drawer-button btn-sm btn-square btn ml-4"
+						class="btn-ghost drawer-button btn-square btn-sm btn ml-4"
 					>
 						<Icon data={lineChart} label="Line charts" scale={1.2} />
 					</label>

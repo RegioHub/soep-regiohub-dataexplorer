@@ -85,3 +85,7 @@ export function toEChartDatasetRows(tbl: ColumnTable): (string | number)[][] {
 		...value.data,
 	]);
 }
+
+export function sleep(ms: number): Promise<unknown> {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
