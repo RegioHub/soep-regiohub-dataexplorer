@@ -160,10 +160,8 @@
 				polyline: true,
 				lineStyle: {
 					color: "#fff",
-					width: 1,
-					shadowBlur: 2,
-					shadowColor: "#1f2937",
-					opacity: 1,
+					width: 2,
+					opacity: level === "nuts1" ? 0 : 1,
 				},
 				data: nuts1Boundaries,
 				animation: false,

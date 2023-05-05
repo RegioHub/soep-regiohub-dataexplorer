@@ -66,9 +66,15 @@
 
 <div {id} class="h-72 scroll-mt-24">
 	<div class="text-center">
-		<div class="tooltip tooltip-bottom" data-tip={tooltip}>
-			<span class="text-base font-bold">{title}</span>
-			<span><sup><Icon class="!fill-info" data={infoCircle} /></sup></span>
+		<div class="tooltip tooltip-bottom w-full" data-tip={tooltip}>
+			<span
+				class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold"
+			>
+				{title}
+			</span>
+			<span class="inline-block align-middle">
+				<sup><Icon class="!fill-info" data={infoCircle} /></sup>
+			</span>
 		</div>
 		<div class="text-sm">{subtitle}</div>
 	</div>
