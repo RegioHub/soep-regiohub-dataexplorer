@@ -115,7 +115,7 @@
 	<title>SOEP RegioHub Data Explorer</title>
 </svelte:head>
 
-<div class="drawer-mobile drawer drawer-end overflow-hidden">
+<div class="drawer drawer-mobile drawer-end overflow-hidden">
 	<input id="chart-pane" type="checkbox" class="drawer-toggle" />
 
 	<div class="drawer-content flex flex-col">
@@ -207,6 +207,7 @@
 					<div class="btn-group w-full">
 						{#each levels as l}
 							<!-- svelte-ignore a11y-click-events-have-key-events -->
+							<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 							<label
 								class="btn-ghost btn w-1/2"
 								class:btn-disabled={level === l}

@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import type { Action } from "svelte/types/runtime/action";
+	import type { Action } from "svelte/action";
 	import { init, type EChartsOption, type EChartsType } from "echarts";
 	import type { EChartSelectchangedEvent } from "./utils";
 
