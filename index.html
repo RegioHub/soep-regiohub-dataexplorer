@@ -4,256 +4,27 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="./favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
-		<meta http-equiv="content-security-policy" content="">
-		<link href="./_app/immutable/assets/_layout.02ca8448.css" rel="stylesheet">
-		<link href="./_app/immutable/assets/_page.64ac01ed.css" rel="stylesheet">
-		<link rel="modulepreload" href="./_app/immutable/entry/start.133b358e.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/index.875b9ded.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.546a4506.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/index.f06729ef.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/app.0341cd0e.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/_layout.svelte.9983ef9d.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/_layout.ts.984db11e.js">
-		<link rel="modulepreload" href="./_app/immutable/chunks/_layout.da46b06b.js">
-		<link rel="modulepreload" href="./_app/immutable/entry/_page.svelte.9f11f1e6.js"><title>SOEP RegioHub Data Explorer</title><!-- HEAD_svelte-1to3qp1_START --><!-- HEAD_svelte-1to3qp1_END -->
+		
+		<link href="./_app/immutable/assets/0.d92ce06b.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/2.64ac01ed.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.2c651f9d.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.345970f8.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.d429b8cf.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.6b7cc583.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.21abbf0e.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.530f3016.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.1e06422c.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.1c3fd7df.js"><title>SOEP RegioHub Data Explorer</title><!-- HEAD_svelte-1to3qp1_START --><!-- HEAD_svelte-1to3qp1_END -->
 	</head>
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">
-
-
-
-
-<div class="drawer-mobile drawer drawer-end overflow-hidden"><input id="chart-pane" type="checkbox" class="drawer-toggle">
-
-	<div class="drawer-content flex flex-col"><div class="drawer-mobile drawer"><input id="sidebar" type="checkbox" class="drawer-toggle">
-
-			<div class="drawer-content flex flex-col"><span class="flex h-16 items-center justify-between p-4 lg:hidden"><label for="sidebar" class="btn-ghost drawer-button btn-square btn-sm btn mr-4"><svg version="1.1" class="fa-icon       s-0fuyeY-3QfUe" width="16.457142857142856" height="19.2" aria-label="Options" role="img" viewBox="0 0 1536 1792" style="font-size: 1.2em">
-    <path d="M352 1408v128h-352v-128h352zM704 1280q26 0 45 19t19 45v256q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-256q0-26 19-45t45-19h256zM864 896v128h-864v-128h864zM224 384v128h-224v-128h224zM1536 1408v128h-736v-128h736zM576 256q26 0 45 19t19 45v256q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-256q0-26 19-45t45-19h256zM1216 768q26 0 45 19t19 45v256q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-256q0-26 19-45t45-19h256zM1536 896v128h-224v-128h224zM1536 384v128h-864v-128h864z"></path>
-      
-      
-  </svg></label>
-					<img class="h-10" src="/_app/immutable/assets/logo.aca5a3cf.svg" alt="Leibniz ScienceCampus SOEP RegioHub Logo">
-					<label for="chart-pane" class="btn-ghost drawer-button btn-square btn-sm btn ml-4"><svg version="1.1" class="fa-icon       s-0fuyeY-3QfUe" width="19.2" height="16.8" aria-label="Line charts" role="img" viewBox="0 0 2048 1792" style="font-size: 1.2em">
-    <path d="M2048 1536v128h-2048v-1536h128v1408h1920zM1920 288v435q0 21-19.5 29.5t-35.5-7.5l-121-121-633 633q-10 10-23 10t-23-10l-233-233-416 416-192-192 585-585q10-10 23-10t23 10l233 233 464-464-121-121q-16-16-7.5-35.5t29.5-19.5h435q14 0 23 9t9 23z"></path>
-      
-      
-  </svg></label></span>
-
-				<div class="flex h-full flex-col items-center overflow-hidden py-4"><h1 class="mt-4 text-lg font-bold">Krankenhausbetten</h1>
-
-<div class="text-sm">Betten je 1000 Einwohner:innen</div>
-
-
-
-
-
-
-
-<div class="h-full w-full"></div>
-
-<div class="inline-flex items-center"><span class="form-control"><label class="label cursor-pointer"><input type="checkbox" class="toggle toggle-sm mr-2">
-
-			<svg version="1.1" class="fa-icon pl-1 text-base-content opacity-50      s-0fuyeY-3QfUe" width="23.771428571428572" height="25.6" aria-label="Zoom aktivieren" role="img" viewBox="0 0 1664 1792" style="font-size: 1.6em">
-    <path d="M1024 800v64q0 13-9.5 22.5t-22.5 9.5h-224v224q0 13-9.5 22.5t-22.5 9.5h-64q-13 0-22.5-9.5t-9.5-22.5v-224h-224q-13 0-22.5-9.5t-9.5-22.5v-64q0-13 9.5-22.5t22.5-9.5h224v-224q0-13 9.5-22.5t22.5-9.5h64q13 0 22.5 9.5t9.5 22.5v224h224q13 0 22.5 9.5t9.5 22.5zM1152 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zM1664 1664q0 53-37.5 90.5t-90.5 37.5q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"></path>
-      
-      
-  </svg><svg version="1.1" class="fa-icon pl-1 text-base-content opacity-50      s-0fuyeY-3QfUe" width="23.771428571428572" height="25.6" aria-label="Zoom aktivieren" role="img" viewBox="0 0 1664 1792" style="font-size: 1.6em">
-    <path d="M1024 800v64q0 13-9.5 22.5t-22.5 9.5h-576q-13 0-22.5-9.5t-9.5-22.5v-64q0-13 9.5-22.5t22.5-9.5h576q13 0 22.5 9.5t9.5 22.5zM1152 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zM1664 1664q0 53-37.5 90.5t-90.5 37.5q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"></path>
-      
-      
-  </svg></label></span></div>
-
-					<div class="mb-4 mt-8 w-80 sm:w-96"><div class="sliderContainer"><div class="rangeSlider   hoverable      pips pip-labels"><span role="slider" class="rangeHandle" data-handle="0" style="left: 0%; z-index: 3;" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" aria-valuetext="2005" aria-orientation="horizontal" aria-disabled="false"  tabindex="0"><span class="rangeNub"></span>
-      <span class="rangeFloat">2005
-        </span>
-    </span>
-  
-  
-<div class="rangePips  hoverable"><span class="pip first selected" style="left: 0%;"><span class="pipVal">2005</span></span>
-
-  <span class="pip" style="left: 7.14%;">
-        </span><span class="pip" style="left: 14.29%;">
-        </span><span class="pip" style="left: 21.43%;">
-        </span><span class="pip" style="left: 28.57%;">
-        </span><span class="pip" style="left: 35.71%;">
-        </span><span class="pip" style="left: 42.86%;">
-        </span><span class="pip" style="left: 50%;">
-        </span><span class="pip" style="left: 57.14%;">
-        </span><span class="pip" style="left: 64.29%;">
-        </span><span class="pip" style="left: 71.43%;">
-        </span><span class="pip" style="left: 78.57%;">
-        </span><span class="pip" style="left: 85.71%;">
-        </span><span class="pip" style="left: 92.86%;">
-        </span>
-
-  <span class="pip last" style="left: 100%;"><span class="pipVal">2019</span></span></div></div>
-
-
-</div></div></div></div>
-
-			<div class="drawer-side"><label for="sidebar" class="drawer-overlay"></label>
-				<div class="menu w-80 bg-base-100 p-4 lg:w-72"><img src="/_app/immutable/assets/logo.aca5a3cf.svg" alt="Leibniz ScienceCampus SOEP RegioHub Logo">
-
-					<div class="divider invisible"></div>
-
-					<div class="form-control mb-4 w-full"><label class="input-group input-group-vertical"><span class="label-text">Indikator</span>
-							<select class="select-bordered select overflow-hidden text-ellipsis text-base"><option value="hospital_beds">Krankenhausbetten</option><option value="pop_density">Bevölkerungsdichte</option><option value="bmi">Body-Mass-Index (BMI)</option><option value="satisfaction_health">Zufriedenheit mit eigener Gesundheit</option><option value="worries_finances">Sorgen um eigene wirtschaftliche Situation</option><option value="satisfaction_life">Lebenszufriedenheit</option><option value="turnout">Wahlbeteiligung</option><option value="trust">Vertrauen</option><option value="soziologie">Twitter-Soziologie-Index</option></select></label></div>
-
-					<div class="form-control"><label class="label cursor-pointer justify-start"><input type="checkbox" class="toggle toggle-sm mr-2">
-							<span class="label-text">Logarithmische Farbskala</span></label></div>
-
-					<div class="form-control mb-4 invisible"><label class="label cursor-pointer justify-start"><input type="checkbox" class="toggle toggle-sm mr-2">
-							<span class="label-text">Krankenhäuser anzeigen</span></label></div>
-
-					<div class="btn-group w-full">
-							<label class="btn-ghost btn w-1/2">▲ Länder
-								<input type="radio" class="hidden" name="level" value="nuts1">
-							</label>
-							<label class="btn-ghost btn w-1/2 btn-disabled">Kreise ▼
-								<input type="radio" class="hidden" name="level" value="nuts3" checked>
-							</label></div>
-
-					<div class="divider invisible"></div>
-
-					<button class="btn-ghost btn-sm btn w-full normal-case">Auswahl aufheben
-					</button>
-
-					<footer class="footer absolute bottom-4 left-4 w-72 bg-base-100 text-base-content lg:w-64"><div><p>Entwickelt von <a class="link" target="_blank" rel="noreferrer" href="https://lo-ng.netlify.app/">Long Nguyen</a>, LeibnizWissenschaftsCampus SOEP RegioHub, Universität
-								Bielefeld (<a class="link" target="_blank" rel="noreferrer" href="https://github.com/RegioHub/soep-regiohub-dataexplorer/">Quellcode</a>). Veröffentlicht unter der Lizenz
-								<a class="link" target="_blank" rel="noreferrer" href="https://creativecommons.org/licenses/by/4.0/legalcode">CC-by 4.0</a>.
-							</p></div></footer></div></div></div></div>
-
-	<div class="drawer-side"><label for="chart-pane" class="drawer-overlay"></label>
-
-		<div class="menu w-11/12 bg-base-100 px-4 py-0 lg:w-[calc((100vw-18rem)*9/16)]"><div class="sticky top-0 z-50 flex h-24 items-center bg-base-100 py-4"><div class="w-[calc(100%-192px)]"></div>
-
-				<div class="form-control w-44"><label class="label cursor-pointer"><input type="checkbox" class="toggle toggle-sm mr-2" checked>
-						<span class="label-text">Bundesdurchschnitt</span></label></div></div>
-
-			<div class="grid gap-0 md:grid-cols-2"><div id="hospital_beds-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Anmerkung: Krankenhausadressen mit OpenStreetMap/Nominatim geokodiert, harmonisiert über Zeit. Datenquelle: destatis"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Krankenhausbetten</span>
-			<span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style="">
-    <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-      
-      
-  </svg></sup></span></div>
-		<div class="text-sm">Betten je 1000 Einwohner:innen</div></div>
-	
-
-
-
-
-
-<div class="h-full w-full"></div></div><div id="pop_density-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: Zensuskorrigierte Bevölkerungszahlen: INKAR; Flächen: Eurostat GISCO"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Bevölkerungsdichte</span>
-			<span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style="">
-    <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-      
-      
-  </svg></sup></span></div>
-		<div class="text-sm">Einwohner:innen je km²</div></div>
-	
-
-
-
-
-
-<div class="h-full w-full"></div></div><div id="bmi-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: SOEP"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Body-Mass-Index (BMI)</span>
-			<span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style="">
-    <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-      
-      
-  </svg></sup></span></div>
-		<div class="text-sm">Gewicht [kg] / Größe [m]²</div></div>
-	
-
-
-
-
-
-<div class="h-full w-full"></div></div><div id="satisfaction_health-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: SOEP"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Zufriedenheit mit eigener Gesundheit</span>
-			<span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style="">
-    <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-      
-      
-  </svg></sup></span></div>
-		<div class="text-sm">0: niedrig – 10: hoch</div></div>
-	
-
-
-
-
-
-<div class="h-full w-full"></div></div><div id="worries_finances-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: SOEP"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Sorgen um eigene wirtschaftliche Situation</span>
-			<span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style="">
-    <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-      
-      
-  </svg></sup></span></div>
-		<div class="text-sm">1: große Sorgen – 3: keine Sorgen</div></div>
-	
-
-
-
-
-
-<div class="h-full w-full"></div></div><div id="satisfaction_life-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: SOEP"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Lebenszufriedenheit</span>
-			<span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style="">
-    <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-      
-      
-  </svg></sup></span></div>
-		<div class="text-sm">0: niedrig – 10: hoch</div></div>
-	
-
-
-
-
-
-<div class="h-full w-full"></div></div><div id="turnout-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: INKAR"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Wahlbeteiligung</span>
-			<span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style="">
-    <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-      
-      
-  </svg></sup></span></div>
-		<div class="text-sm">% Zweitstimmen an Wahlberechtigten</div></div>
-	
-
-
-
-
-
-<div class="h-full w-full"></div></div><div id="trust-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Anmerkung: Mittelwertindex aus drei Items: (1) &quot;Allgemeines Vertrauen&quot;, (2) &quot;Verlass auf niemanden&quot; (invertiert) und (3) &quot;Vorsicht gegenüber Fremden&quot; (invertiert). Datenquelle: SOEP"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Vertrauen</span>
-			<span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style="">
-    <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-      
-      
-  </svg></sup></span></div>
-		<div class="text-sm">1: niedrig – 4: hoch</div></div>
-	
-
-
-
-
-
-<div class="h-full w-full"></div></div><div id="soziologie-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: Twitter"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Twitter-Soziologie-Index</span>
-			<span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style="">
-    <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-      
-      
-  </svg></sup></span></div>
-		<div class="text-sm">Anzahl Tweets mit "soziolog"</div></div>
-	
-
-
-
-
-
-<div class="h-full w-full"></div></div></div></div></div></div>
-
-
+		<div style="display: contents">   <div class="drawer drawer-mobile drawer-end overflow-hidden"><input id="chart-pane" type="checkbox" class="drawer-toggle"> <div class="drawer-content flex flex-col"><div class="drawer-mobile drawer"><input id="sidebar" type="checkbox" class="drawer-toggle"> <div class="drawer-content flex flex-col"><span class="flex h-16 items-center justify-between p-4 lg:hidden"><label for="sidebar" class="btn-ghost drawer-button btn-square btn-sm btn mr-4"><svg version="1.1" class="fa-icon       s-0fuyeY-3QfUe" width="16.457142857142856" height="19.2" aria-label="Options" role="img" viewBox="0 0 1536 1792" style="font-size: 1.2em"> <path d="M352 1408v128h-352v-128h352zM704 1280q26 0 45 19t19 45v256q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-256q0-26 19-45t45-19h256zM864 896v128h-864v-128h864zM224 384v128h-224v-128h224zM1536 1408v128h-736v-128h736zM576 256q26 0 45 19t19 45v256q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-256q0-26 19-45t45-19h256zM1216 768q26 0 45 19t19 45v256q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-256q0-26 19-45t45-19h256zM1536 896v128h-224v-128h224zM1536 384v128h-864v-128h864z"></path>   </svg></label> <img class="h-10" src="/transmit-data-explorer/_app/immutable/assets/logo.aca5a3cf.svg" alt="Leibniz ScienceCampus SOEP RegioHub Logo"> <label for="chart-pane" class="btn-ghost drawer-button btn-square btn-sm btn ml-4"><svg version="1.1" class="fa-icon       s-0fuyeY-3QfUe" width="19.2" height="16.8" aria-label="Line charts" role="img" viewBox="0 0 2048 1792" style="font-size: 1.2em"> <path d="M2048 1536v128h-2048v-1536h128v1408h1920zM1920 288v435q0 21-19.5 29.5t-35.5-7.5l-121-121-633 633q-10 10-23 10t-23-10l-233-233-416 416-192-192 585-585q10-10 23-10t23 10l233 233 464-464-121-121q-16-16-7.5-35.5t29.5-19.5h435q14 0 23 9t9 23z"></path>   </svg></label></span> <div class="flex h-full flex-col items-center overflow-hidden py-4"><h1 class="mt-4 text-lg font-bold">Krankenhausbetten</h1> <div class="text-sm">Betten je 1000 Einwohner:innen</div>    <div class="h-full w-full"></div> <div class="inline-flex items-center"><span class="form-control"><label class="label cursor-pointer"><input type="checkbox" class="toggle toggle-sm mr-2"> <svg version="1.1" class="fa-icon pl-1 text-base-content opacity-50      s-0fuyeY-3QfUe" width="23.771428571428572" height="25.6" aria-label="Zoom aktivieren" role="img" viewBox="0 0 1664 1792" style="font-size: 1.6em"> <path d="M1024 800v64q0 13-9.5 22.5t-22.5 9.5h-224v224q0 13-9.5 22.5t-22.5 9.5h-64q-13 0-22.5-9.5t-9.5-22.5v-224h-224q-13 0-22.5-9.5t-9.5-22.5v-64q0-13 9.5-22.5t22.5-9.5h224v-224q0-13 9.5-22.5t22.5-9.5h64q13 0 22.5 9.5t9.5 22.5v224h224q13 0 22.5 9.5t9.5 22.5zM1152 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zM1664 1664q0 53-37.5 90.5t-90.5 37.5q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"></path>   </svg><svg version="1.1" class="fa-icon pl-1 text-base-content opacity-50      s-0fuyeY-3QfUe" width="23.771428571428572" height="25.6" aria-label="Zoom aktivieren" role="img" viewBox="0 0 1664 1792" style="font-size: 1.6em"> <path d="M1024 800v64q0 13-9.5 22.5t-22.5 9.5h-576q-13 0-22.5-9.5t-9.5-22.5v-64q0-13 9.5-22.5t22.5-9.5h576q13 0 22.5 9.5t9.5 22.5zM1152 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zM1664 1664q0 53-37.5 90.5t-90.5 37.5q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"></path>   </svg></label></span></div> <div class="mb-4 mt-8 w-80 sm:w-96"><div class="sliderContainer"><div class="rangeSlider   hoverable      pips pip-labels"><span role="slider" class="rangeHandle" data-handle="0" style="left: 0%; z-index: 3;" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" aria-valuetext="2005" aria-orientation="horizontal" aria-disabled="false"  tabindex="0"><span class="rangeNub"></span> <span class="rangeFloat">2005 </span> </span>   <div class="rangePips  hoverable"><span class="pip first selected" style="left: 0%;"><span class="pipVal">2005</span></span> <span class="pip" style="left: 7.14%;"> </span><span class="pip" style="left: 14.29%;"> </span><span class="pip" style="left: 21.43%;"> </span><span class="pip" style="left: 28.57%;"> </span><span class="pip" style="left: 35.71%;"> </span><span class="pip" style="left: 42.86%;"> </span><span class="pip" style="left: 50%;"> </span><span class="pip" style="left: 57.14%;"> </span><span class="pip" style="left: 64.29%;"> </span><span class="pip" style="left: 71.43%;"> </span><span class="pip" style="left: 78.57%;"> </span><span class="pip" style="left: 85.71%;"> </span><span class="pip" style="left: 92.86%;"> </span> <span class="pip last" style="left: 100%;"><span class="pipVal">2019</span></span></div></div>  </div></div></div></div> <div class="drawer-side"><label for="sidebar" class="drawer-overlay"></label> <div class="menu w-80 bg-base-100 p-4 lg:w-72"><img src="/transmit-data-explorer/_app/immutable/assets/logo.aca5a3cf.svg" alt="Leibniz ScienceCampus SOEP RegioHub Logo"> <div class="divider invisible"></div> <div class="form-control mb-4 w-full"><label class="input-group input-group-vertical"><span class="label-text" data-svelte-h="svelte-vdapia">Indikator</span> <select class="select-bordered select overflow-hidden text-ellipsis text-base"><option value="hospital_beds">Krankenhausbetten</option><option value="pop_density">Bevölkerungsdichte</option><option value="bmi">Body-Mass-Index (BMI)</option><option value="satisfaction_health">Zufriedenheit mit eigener Gesundheit</option><option value="worries_finances">Sorgen um eigene wirtschaftliche Situation</option><option value="satisfaction_life">Lebenszufriedenheit</option><option value="turnout">Wahlbeteiligung</option><option value="trust">Vertrauen</option><option value="soziologie">Twitter-Soziologie-Index</option></select></label></div> <div class="form-control"><label class="label cursor-pointer justify-start"><input type="checkbox" class="toggle toggle-sm mr-2"> <span class="label-text" data-svelte-h="svelte-1v37zgp">Logarithmische Farbskala</span></label></div> <div class="form-control mb-4 invisible"><label class="label cursor-pointer justify-start"><input type="checkbox" class="toggle toggle-sm mr-2"> <span class="label-text" data-svelte-h="svelte-log2fb">Krankenhäuser anzeigen</span></label></div> <div class="btn-group w-full">  <label class="btn-ghost btn w-1/2">▲ Länder <input type="radio" class="hidden" name="level" value="nuts1"> </label>  <label class="btn-ghost btn w-1/2 btn-disabled">Kreise ▼ <input type="radio" class="hidden" name="level" value="nuts3" checked> </label></div> <div class="divider invisible"></div> <button class="btn-ghost btn-sm btn w-full normal-case" data-svelte-h="svelte-10mj74n">Auswahl aufheben</button> <footer class="footer absolute bottom-4 left-4 w-72 bg-base-100 text-base-content lg:w-64"><div><p>Entwickelt von <a class="link" target="_blank" rel="noreferrer" href="https://lo-ng.netlify.app/" data-svelte-h="svelte-9a55xd">Long Nguyen</a>, LeibnizWissenschaftsCampus SOEP RegioHub, Universität
+								Bielefeld (<a class="link" target="_blank" rel="noreferrer" href="https://github.com/RegioHub/soep-regiohub-dataexplorer/" data-svelte-h="svelte-1gx0tv7">Quellcode</a>). Veröffentlicht unter der Lizenz
+								<a class="link" target="_blank" rel="noreferrer" href="https://creativecommons.org/licenses/by/4.0/legalcode" data-svelte-h="svelte-1yssc68">CC-by 4.0</a>.</p></div></footer></div></div></div></div> <div class="drawer-side"><label for="chart-pane" class="drawer-overlay"></label> <div class="menu w-11/12 bg-base-100 px-4 py-0 lg:w-[calc((100vw-18rem)*9/16)]"><div class="sticky top-0 z-50 flex h-24 items-center bg-base-100 py-4"><div class="w-[calc(100%-192px)]"></div> <div class="form-control w-44"><label class="label cursor-pointer"><input type="checkbox" class="toggle toggle-sm mr-2" checked> <span class="label-text" data-svelte-h="svelte-150454n">Bundesdurchschnitt</span></label></div></div> <div class="grid gap-0 md:grid-cols-2"><div id="hospital_beds-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Anmerkung: Krankenhausadressen mit OpenStreetMap/Nominatim geokodiert, harmonisiert über Zeit. Datenquelle: destatis"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Krankenhausbetten</span> <span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style=""> <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>   </svg></sup></span></div> <div class="text-sm">Betten je 1000 Einwohner:innen</div></div>    <div class="h-full w-full"></div></div><div id="pop_density-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: Zensuskorrigierte Bevölkerungszahlen: INKAR; Flächen: Eurostat GISCO"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Bevölkerungsdichte</span> <span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style=""> <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>   </svg></sup></span></div> <div class="text-sm">Einwohner:innen je km²</div></div>    <div class="h-full w-full"></div></div><div id="bmi-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: SOEP"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Body-Mass-Index (BMI)</span> <span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style=""> <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>   </svg></sup></span></div> <div class="text-sm">Gewicht [kg] / Größe [m]²</div></div>    <div class="h-full w-full"></div></div><div id="satisfaction_health-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: SOEP"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Zufriedenheit mit eigener Gesundheit</span> <span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style=""> <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>   </svg></sup></span></div> <div class="text-sm">0: niedrig – 10: hoch</div></div>    <div class="h-full w-full"></div></div><div id="worries_finances-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: SOEP"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Sorgen um eigene wirtschaftliche Situation</span> <span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style=""> <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>   </svg></sup></span></div> <div class="text-sm">1: große Sorgen – 3: keine Sorgen</div></div>    <div class="h-full w-full"></div></div><div id="satisfaction_life-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: SOEP"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Lebenszufriedenheit</span> <span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style=""> <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>   </svg></sup></span></div> <div class="text-sm">0: niedrig – 10: hoch</div></div>    <div class="h-full w-full"></div></div><div id="turnout-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: INKAR"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Wahlbeteiligung</span> <span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style=""> <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>   </svg></sup></span></div> <div class="text-sm">% Zweitstimmen an Wahlberechtigten</div></div>    <div class="h-full w-full"></div></div><div id="trust-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Anmerkung: Mittelwertindex aus drei Items: (1) &quot;Allgemeines Vertrauen&quot;, (2) &quot;Verlass auf niemanden&quot; (invertiert) und (3) &quot;Vorsicht gegenüber Fremden&quot; (invertiert). Datenquelle: SOEP"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Vertrauen</span> <span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style=""> <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>   </svg></sup></span></div> <div class="text-sm">1: niedrig – 4: hoch</div></div>    <div class="h-full w-full"></div></div><div id="soziologie-linechart" class="h-72 scroll-mt-24"><div class="text-center"><div class="tooltip tooltip-bottom w-full" data-tip="Datenquelle: Twitter"><span class="inline-block max-w-[calc(100%-24px)] overflow-hidden text-ellipsis whitespace-nowrap align-middle text-base font-bold">Twitter-Soziologie-Index</span> <span class="inline-block align-middle"><sup><svg version="1.1" class="fa-icon !fill-info      s-0fuyeY-3QfUe" width="13.714285714285714" height="16" aria-label="" role="presentation" viewBox="0 0 1536 1792" style=""> <path d="M1024 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zM896 480v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zM1536 896q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>   </svg></sup></span></div> <div class="text-sm">Anzahl Tweets mit "soziolog"</div></div>    <div class="h-full w-full"></div></div></div></div></div></div> 
 			
 			<script>
 				{
-					__sveltekit_kwx1w = {
+					__sveltekit_gryvcu = {
+						assets: "/transmit-data-explorer",
 						base: new URL(".", location).pathname.slice(0, -1),
 						env: {}
 					};
@@ -263,8 +34,8 @@
 					const data = [null,null];
 
 					Promise.all([
-						import("./_app/immutable/entry/start.133b358e.js"),
-						import("./_app/immutable/entry/app.0341cd0e.js")
+						import("./_app/immutable/entry/start.2c651f9d.js"),
+						import("./_app/immutable/entry/app.21abbf0e.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 2],
