@@ -25,7 +25,10 @@ Web application for interactive exploration of data at SOEP RegioHub
   - `+page.svelte`: Home page
   - `+layout.svelte`: Layout for all pages (here: only the home page)
   - `*.svelte` (Pascal case): Components used in the home page
+    - `LineChart.svelte`, `Map.svelte`: Visualization components, depend on `Echarts.svelte`, which is a wrapper for the ECharts library (docs: https://echarts.apache.org/en/api.html, https://echarts.apache.org/en/option.html)
+    - `DiscreteSlider.svelte`: Slider for selecting year
   - `*.ts`: Server-side functions (e.g. for loading data)
+  - `metadata.json`: Metadata for the visualized variables
   - `assets/`: Static files (data, images)
 
 ### Testing and deployment
