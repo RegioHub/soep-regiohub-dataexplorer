@@ -31,6 +31,14 @@ Web application for interactive exploration of data at SOEP RegioHub
   - `metadata.json`: Metadata for the visualized variables
   - `assets/`: Static files (data, images)
 
+### Key dependencies
+
+- [SvelteKit](https://kit.svelte.dev/docs): Web application framework
+- [Tailwind CSS](https://tailwindcss.com/docs): CSS framework
+- [DaisyUI](https://daisyui.com/docs): Tailwind CSS component library
+- [ECharts](https://echarts.apache.org/en/index.html): Visualization library
+- [arquero](https://uwdata.github.io/arquero/): Data manipulation library
+
 ### Testing and deployment
 
 - Start development server and open browser
